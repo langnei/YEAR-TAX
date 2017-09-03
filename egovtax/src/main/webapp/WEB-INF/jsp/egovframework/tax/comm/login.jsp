@@ -8,9 +8,7 @@
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />	
 <title>로그인</title>
-<link rel="stylesheet" type="text/css" href="/common/css/login.css" />
-<script type="text/javascript" src="/common/js/commonFunc.js"></script>
-<script type="text/javascript" src="/common/jquery/js/jquery-1.9.1.js"></script>
+<jsp:include page="/common/jsp/include_head.jsp" />
 </head>
 <script language="javascript"> 
 	

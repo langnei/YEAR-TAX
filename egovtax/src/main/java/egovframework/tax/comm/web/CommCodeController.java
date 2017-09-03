@@ -186,7 +186,7 @@ public class CommCodeController {
 		// 중메뉴 select box
 		mmenuSelect += "</select>";
 		
-		//System.out.println("mmenuSelect=="+mmenuSelect);
+		System.out.println("mmenuSelect=="+mmenuSelect);
 		//CommonSessionCookie.setSessionAttribute(req, "_mmenu_select", mmenuSelect);
 		
 		String acctGubn = "";
