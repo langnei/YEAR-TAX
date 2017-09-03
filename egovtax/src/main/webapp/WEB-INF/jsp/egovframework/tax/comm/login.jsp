@@ -8,8 +8,8 @@
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />	
 <title>로그인</title>
-<link rel="stylesheet" type="text/css" href="/css/login.css" />
-<script src="/common/js/commonFunc.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/common/css/login.css" />
+<script type="text/javascript" src="/common/js/commonFunc.js"></script>
 <script type="text/javascript" src="/common/jquery/js/jquery-1.9.1.js"></script>
 </head>
 <script language="javascript"> 
@@ -25,14 +25,13 @@
 <body style="background-image: url(/image/login_top_bg.gif);	background-repeat: repeat-x;">
 <div class="login_top" style="background: url(/image/login_top.gif) center top no-repeat;">
 </div>
-
 <div class="login_wrap">
 	<div class="login_title">
 		<img src="/image/login_title.png" />
 	</div>
 	<div class="login_box" style="background:url(/image/login_center.jpg) no-repeat;"> 
 		<div class="login_input">
-			<form name="loginForm" action="/mis/loginCheck.do" method="post" onsubmit="return fn_login_user('loginForm')">
+			<form name="loginForm" action="/tax/loginCheck.do" method="post" onsubmit="return fn_login_user('loginForm')">
 		  	<table width="255px;" height="60px" border="0" cellpadding="0" cellspacing="0">
 		    	<tr>
 		      		<td width="130px" height="60px">
