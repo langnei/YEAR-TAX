@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />	
+
+<link rel="stylesheet" href="../../css/style.css"/>
+<script type="text/javascript" src="../js/common.js"></script>
+<script language="javascript" src="../sheet/ibsheetinfo.js"></script>
+<script language="javascript" src="../sheet/ibsheet.js"></script>
+<title>IBSheet7-Product</title>
+</head>
+
+<script language="javascript">
+	var pageheightoffset = 250;
+	/*Sheet 기본 설정 */
+	function LoadPage() {
+		var cfg = {SearchMode:2, Page:100, MergeSheet:msHeaderOnly};
+		var headers = [
+			{Text:"신청인|신청일자|결재여부|신청금액|근태기간|근태기간|시간|시간", Align:"Center"}
+			,{Text:"신청인|신청일자|결재여부|신청금액|시작일|종료일|시작|종료", Align:"Center"}
+		];
+		var info = {Sort:1,ColMove:1,ColResize:1,HeaderCheck:0};
+		var cols = [
+			{Type:"Text",Width:80,ColMerge:1},
+			{Type:"Date",Width:100,Format:"Ymd",ColMerge:1,Align:"Center"},
+			{Type:"CheckBox",Width:80,SaveName:"A",ColMerge:1},
+			{Type:"AutoSum",Width:85,SaveName:"B",Format:"Integer",ColMerge:1},
+			{Type:"Date",Width:100,SaveName:"C",Format:"Ymd",Align:"Center"},
+			{Type:"Date",Width:100,SaveName:"D",Format:"Ymd",Align:"Center"},
+			{Type:"Date",Width:100,Format:"Hm",Align:"Center"},
+			{Type:"Date",Width:100,Format:"Hm",Align:"Center"}
+		];
+
+		mySheet.SetConfig(cfg);
+		mySheet.InitHeaders(headers,info);
+		mySheet.InitColumns(cols);
+
+		mySheet.SetHeaderBackColor("#C9E1F5");
+		mySheet.SetSumBackColor("#E8F4FF");
+
+		mySheet.FitColWidth();
+	}
+
+	/*Sheet 각종 처리*/
+	function doAction(sAction) {
+		switch(sAction) {
+			case "search":      //조회
+				mySheet.DoSearch("excel_data.xml");
+				break;
+			case "reload":        //저장
+				mySheet.RemoveAll();
+				break;
+			case "down2text":
+				var filename = document.getElementById("filename").value;
+				var params = { FileName :filename} ;
+				mySheet.Down2Text(params);
+				break;
+			
+		}
+	}
+
+function AddZero(str){
+	
+	if((str+"").length==1){
+		return "0"+str;
+	}	
+	return str;
+}
+	function mySheet_OnSearchEnd() {
+		mySheet.FitColWidth();
+	}
+
+	function mySheet_OnResize() {
+		mySheet.FitColWidth();
+	}
+</script>
+
+<body onLoad="LoadPage()">
+        <div class="page_title">
+            <span><a class="closeDepth" href="#">closeDepth</a></span>
+            <span class="title">기타기능 > <b>텍스트다운</b></span>
+        </div>
+                
+        <div class="main_content">
+            <div class="exp_product">
+                시트의 내용을 text 형태의 파일로 다운로드 한다.. 
+            </div>
+        
+            <div class="ib_function float_right">
+                <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
+                <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
+            </div>
+
+			<div class="clear hidden"></div>  
+            
+            <div class="ib_function2 border_sheet">
+				<table class="ib_column2">
+					<tr>
+						
+						<th class="tit">파일명</th>
+						<td class="r20"><input type="text" id="filename" value="myData.txt" size="10" class="inputbox"/></td>
+             <td class="r20"><a href="javascript:doAction('down2text');" class="f2_btn_white btn_sheet" style="width:80px">텍스트다운</a></td>
+					 </tr>
+				</table>
+           </div>
+
+			<p class="subtit_sheet">조회리스트</p>
+            <div class="ib_product">
+				<script type="text/javascript"> createIBSheet("mySheet", "100%", "100%"); </script>
+            </div>
+        </div>
+        <!--main_content-->
+
+</body>
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=9" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+
+
+<script type="text/javascript" src="../js/common.js"></script>
+<script language="javascript" src="../sheet/ibsheetinfo.js"></script>
+<script language="javascript" src="../sheet/ibsheet.js"></script>
+<title>IBSheet7-Product</title>
+</head>
+
+<script language="javascript">
+	var pageheightoffset = 700;
+	/*Sheet 기본 설정 */
+	function LoadPage() {
+		var cfg = {SearchMode:2, Page:100, MergeSheet:msHeaderOnly};
+		var headers = [
+			{Text:"신청인|신청일자|결재여부|신청금액|근태기간|근태기간|시간|시간", Align:"Center"}
+			,{Text:"신청인|신청일자|결재여부|신청금액|시작일|종료일|시작|종료", Align:"Center"}
+		];
+		var info = {Sort:1,ColMove:1,ColResize:1,HeaderCheck:0};
+		var cols = [
+			{Type:"Text",Width:80,ColMerge:1},
+			{Type:"Date",Width:100,Format:"Ymd",ColMerge:1,Align:"Center"},
+			{Type:"CheckBox",Width:80,SaveName:"A",ColMerge:1},
+			{Type:"AutoSum",Width:85,SaveName:"B",Format:"Integer",ColMerge:1},
+			{Type:"Date",Width:100,SaveName:"C",Format:"Ymd",Align:"Center"},
+			{Type:"Date",Width:100,SaveName:"D",Format:"Ymd",Align:"Center"},
+			{Type:"Date",Width:100,Format:"Hm",Align:"Center"},
+			{Type:"Date",Width:100,Format:"Hm",Align:"Center"}
+		];
+
+		mySheet.SetConfig(cfg);
+		mySheet.InitHeaders(headers,info);
+		mySheet.InitColumns(cols);
+
+		mySheet.SetHeaderBackColor("#C9E1F5");
+		mySheet.SetSumBackColor("#E8F4FF");
+
+		mySheet.FitColWidth();
+	}
+
+	/*Sheet 각종 처리*/
+	function doAction(sAction) {
+		switch(sAction) {
+			case "search":      //조회
+				mySheet.DoSearch("excel_data.xml");
+				break;
+			case "reload":        //저장
+				mySheet.RemoveAll();
+				break;
+			case "down2excel":
+			var filename = document.getElementById("filename").value;
+			var worksheetname = document.getElementById("worksheetname").value;
+			var merge = document.getElementById("merge").checked?1:0;
+			var design = document.getElementById("design").checked?1:0;
+			var t = new Date();
+			var DandT = t.getFullYear() + "-" +AddZero(t.getMonth()+1)+"-" + AddZero(t.getDate())+"   "+AddZero(t.getHours())+":"+AddZero(t.getMinutes());
+			
+			var TITLE = "[잔업 수당 신청]\r\n\r\n|문서번호:  (0009)";
+					TITLE += "\r\n | 신청기간: 2003-09 ~ 2004-09";
+					TITLE += "\r\n[ "+mySheet.RowCount()+" ]건, 출력시간 : "+DandT+"||||||단위: 원";
+					var userMG  = "0,0,2,8 2,1,1,5 3,1,1,5 4,0,1,5 4,6,1,2";
+
+			
+			var params = { FileName :filename,  SheetName :worksheetname,Merge:merge,SheetDesign:design,TitleText:TITLE,UserMerge:userMG,DownSum:0} ;
+			mySheet.Down2Excel(params);
+
+				break;
+			case "loadexcel":
+				mySheet.RemoveAll();
+				var mch = document.getElementById("match").value;
+				var params = { Mode : mch,  StartRow: "6"} ;
+			
+				mySheet.LoadExcel(params);
+				break;
+			
+			case "test":
+				var param = "?" + FormQueryString(document.forms[0]);
+				
+				if(document.getElementById("fontbold").checked == true){
+					param = param + "&bold=True";
+				}else{
+					param = param + "&bold=False";
+				}
+				
+				if(document.getElementById("fontitalic").checked == true){
+					param = param + "&italic=True";
+				}else{
+					param = param + "&italic=False";
+				}
+							
+				param = param + "&headerleft=" +document.getElementById("leftheader").value.replace(/&/g,"%26");
+				param = param + "&headercenter=" +document.getElementById("centerheader").value.replace(/&/g,"%26");
+				param = param + "&headerright=" +document.getElementById("rightheader").value.replace(/&/g,"%26");
+				param = param + "&footerleft=" +document.getElementById("leftfooter").value.replace(/&/g,"%26");
+				param = param + "&footercenter=" +document.getElementById("centerfooter").value.replace(/&/g,"%26");
+				param = param + "&footerright="+document.getElementById("rightfooter").value.replace(/&/g,"%26");
+				alert(param);
+				var info = {Merge:1, OnlyHeaderMerge:1, SheetDesign:1, ReportXMLURL:"../11/testXml.jsp"+param};
+				//var info = {Merge:1, OnlyHeaderMerge:1, SheetDesign:1, ReportXMLURL:"../11/test.xml"};
+				mySheet.Down2Excel(info);
+				break;
+		}
+	}
+
+	function mySheet_OnSearchEnd() {
+		mySheet.FitColWidth();
+	}
+
+	function mySheet_OnResize() {
+		mySheet.FitColWidth();
+	}
+</script>
+
+<body onLoad="LoadPage()">
+        <div class="page_title">
+            <span><a class="closeDepth" href="#">closeDepth</a></span>
+            <span class="title">기타기능 > <b>엑셀리포트</b></span>
+        </div>
+	        
+	       
+	                
+	        <div class="main_content">
+	            <div class="exp_product">
+	                시트의 내용을 엑셀다운시 페이지 설정기능 및 머리글, 바닥글 기능을 확인한다.
+	            </div>
+	        
+	            <div class="ib_function float_right">
+	                <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
+	                <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
+	                <a href="javascript:doAction('test')" class="f1_btn_white gray">다운로드</a>
+	            </div>
+	 			<form id="form" name="form">
+				<div class="clear hidden"></div>  
+	            <p class="subtit_sheet">페이지설정</p>
+	            <div class="ib_function2 border_sheet">
+					<table class="ib_column2">
+						<tr>
+							<th class="tit">시작행</th>
+							<td class="r20"><input type="text" id="startrow" value="10" size="10" class="inputbox"/></td>
+							<th class="tit">용지크기</th>
+							<td class="r20">
+								<select id="papersize" class="selectbox">
+									<option value="A4" selected>A4</option>
+									<option value="A3" >A3</option>
+									<option value="B4" >B4</option>
+									<option value="B5" >B5</option>
+								</select>
+							</td>
+							<th class="tit">용지방향</th>
+							<td class="r20">
+								<select id="paperdir" class="selectbox">
+									<option value="Landscape">가로</option>
+									<option value="Portrait">세로</option>
+								</select>
+							</td>
+							<th class="tit">반복컬럼</th>
+							<td class="r20"><input type="text" id="repeatcol1" value="" size="2" class="inputbox"/> ~ <input type="text" id="repeatcol2" value="" size="2" class="inputbox"/></td>
+							<th class="tit">반복행</th>
+							<td class="r20" colspan="3"><input type="text" id="repeatrow1" value="" size="2" class="inputbox"/> ~ <input type="text" id="repeatrow2" value="" size="2" class="inputbox"/></td>
+						</tr>
+						<tr>
+						 	<th class="tit">폰트</th>
+							<td class="r20">
+								<input type="text" id="fontname" value="" size="10" class="inputbox"/>
+							</td>
+							<th class="tit">볼드여부</th>
+							<td class="r20">
+								<input type="checkbox" id="fontbold" name="fontbold" value="">
+							</td>
+							<th class="tit">기울기</th>
+							<td class="r20">
+								<input type="checkbox" id="fontitalic" name="fontitalic" value="">
+							</td>
+							<th class="tit">글자크기</th>
+							<td class="r20" colspan="5">
+								<input type="text" id="fontsize" value="10" size="10" class="inputbox"/>
+							</td>			
+						 </tr>
+						 <tr>
+						 	<th class="tit">컬럼너비</th>
+							<td class="r20" colspan="5">
+								범위(<input type="text" class="inputbox" size="2" id="colwidth1">,<input type="text" class="inputbox" size="2" id="colwidth2">)
+								&nbsp;&nbsp;Width값 <input type="text" id="width" value="" size="10" class="inputbox"/> 
+							</td>
+							<th class="tit">행높이</th>
+							<td class="r20" colspan="5">
+								범위(<input type="text" class="inputbox" size="2" id="rowheight1">,<input type="text" class="inputbox" size="2" id="rowheight2">)
+								&nbsp;&nbsp;Height값 <input type="text" id="height" value="" size="10" class="inputbox"/> 
+							</td>								
+						 </tr>
+					 </table>
+				 </div>
+				 <p class="subtit_sheet">여백기능</p>
+				 <div class="ib_function2 border_sheet">
+					<table class="ib_column2">
+						<tr>						
+							<th class="tit">상</th>
+							<td class="r20">
+								<input type="text" id="top" value="" size="5" class="inputbox"/>
+							</td>
+							<th class="tit">하</th>
+							<td class="r20">
+								<input type="text" id="bottom" value="" size="5" class="inputbox"/>
+							</td>
+							<th class="tit">좌</th>
+							<td class="r20">
+								<input type="text" id="left" value="" size="5" class="inputbox"/>
+							</td>
+							<th class="tit">우</th>
+							<td class="r20">
+								<input type="text" id="right" value="" size="5" class="inputbox"/>
+							</td>
+							<th class="tit">머리글</th>
+							<td class="r20">
+								<input type="text" id="header" value="" size="5" class="inputbox"/>
+							</td>
+							<th class="tit">바닥글</th>
+							<td class="r20">	
+								<input type="text" id="footer" value="" size="5" class="inputbox"/>							
+							</td>
+						 </tr>
+					  </table>
+	             </div>				 
+	             </form>
+			     <p class="subtit_sheet">머리글, 바닥글 기능</p>
+			     <div class="ib_function2 border_sheet">
+					  <table class="ib_column2">
+					  	<tr>
+					  		<td colspan="6">[가능 예약어] &P : 페이지번호, &N : 전체페이지수, &D : 날짜, &T : 시간, &F : 파일명, &A : 위크시트명</td>
+					  	</tr>
+					  	<tr>						
+							<th class="tit">머리글왼쪽</th>
+							<td class="r20">
+								<input type="text" id="leftheader" value="" size="25" class="inputbox"/>
+							</td>
+							<th class="tit">머리글가운데</th>
+							<td class="r20">
+								<input type="text" id="centerheader" value="&D &T" size="25" class="inputbox"/>
+							</td>
+							<th class="tit">머리글오른쪽</th>
+							<td class="r20">
+								<input type="text" id="rightheader" value="&A" size="25" class="inputbox"/>
+							</td>
+						</tr>
+						<tr>
+							<th class="tit">바닥글왼쪽</th>
+							<td class="r20">
+								<input type="text" id="leftfooter" value="" size="25" class="inputbox"/>
+							</td>
+							<th class="tit">바닥글가운데</th>
+							<td class="r20">
+								<input type="text" id="centerfooter" value="&P/&N" size="25" class="inputbox"/>
+							</td>
+							<th class="tit">바닥글오른쪽</th>
+							<td class="r20">
+								<input type="text" id="rightfooter" value="" size="25" class="inputbox"/>
+							</td>
+						 </tr>
+					</table>
+	           </div>
+			
+			<p class="subtit_sheet">조회리스트</p>
+            <div class="ib_product">
+				<script type="text/javascript"> createIBSheet("mySheet", "100%", "100%"); </script>
+            </div>
+        </div>
+        <!--main_content-->
+
+</body>
+</html>

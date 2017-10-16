@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />	
+
+<link rel="stylesheet" href="../../css/style.css"/>
+<script type="text/javascript" src="../js/common.js"></script>
+<script language="javascript" src="../sheet/ibsheetinfo.js"></script>
+<script language="javascript" src="../sheet/ibsheet.js"></script>
+<title>IBSheet7-Product</title>
+</head>
+
+<script language="javascript">
+	
+//	AutoResizeOff = true;
+	var pageheightoffset = 250;
+	/*Sheet 기본 설정 */
+	function LoadPage() {
+		var cfg = {FrozenCol:0};
+		var headers = [
+			{Text:"NO|상태|삭제|문자열|콤보|콤보에디트|팝업|팝업에디트|자동합계|자동평균|정수|실수|날짜|패스워드|체크박스|라디오|이미지", Align:"Center"}
+		];
+		var cols = [
+			{Type:"Seq", Align:"Right"},
+			{Type:"Status", Align:"Center"},
+			{Type:"DelCheck"},
+			{Type:"Text", KeyField:1, Align:"Center"},
+			{Type:"Combo", Width:80, ComboText:"대기|진행중|완료", ComboCode:"01|02|03",PopupText:"대기|진행중|완료"},
+			{Type:"ComboEdit", Width:80, ComboText:"고려대학교|고려대학교2|국민대학교|서울대학교|숙명여자대학교|연세대학교|울산대학교|울산과학기술대학교|이화여자대학교|인천대학교|인천가톨릭대학교"},
+			{Type:"Popup", Width:100},
+			{Type:"PopupEdit", Width:100},
+			{Type:"AutoSum", Align:"Right",Width:70,Format:"NullInteger"},
+			{Type:"AutoAvg", Align:"Right",Width:70, Format:"NullFloat"},
+			{Type:"Int", Align:"Right", Format:"Integer",Width:70, Hidden:1},
+			{Type:"Float", Align:"Right", Format:"Float",Width:70, Hidden:1},
+			{Type:"Date", Align:"Center", Format:"Ymd", Width:100},
+			{Type:"Pass", Hidden:1},
+			{Type:"CheckBox"},
+			{Type:"Radio"}
+		];
+		
+		mySheet.SetConfig(cfg);
+		mySheet.InitHeaders(headers);
+		mySheet.InitColumns(cols);
+		doAction('search');
+		
+	}
+
+	/*Sheet 각종 처리*/
+	function doAction(sAction) {
+		switch(sAction) {
+			case "search":      //조회
+				mySheet.DoSearch("Theme_data.html");
+				break;
+			case "reload":        //초기화
+				mySheet.RemoveAll();
+				break;
+			case "Main":      
+				mySheet.SetTheme('GM', 'Main');
+			break;
+
+			case "Main2":      
+				mySheet.SetTheme('GM2', 'Main2');
+			break;
+
+			case "Main3":
+				mySheet.SetTheme('GM3', 'Main3');
+			break;
+
+			case "Blue":      
+				mySheet.SetTheme('BL', 'Blue');
+			break;
+
+			case "Brown":      
+				mySheet.SetTheme('BN', 'Brown');
+			break;
+
+			case "Gray":      
+				mySheet.SetTheme('GY', 'Gray');
+			break;
+
+			case "Green":      
+				mySheet.SetTheme('GN', 'Green');
+			break;
+
+			case "Navy":      
+				mySheet.SetTheme('NB', 'Navy');
+			break;
+
+			case "Orange":      
+				mySheet.SetTheme('OR', 'Orange');
+			break;
+
+			case "Purple":      
+				mySheet.SetTheme('PP', 'Purple');
+			break;
+
+			case "Yellow":      
+				mySheet.SetTheme('YL', 'Yellow');
+			break;
+			case "YellowGreen":      
+				mySheet.SetTheme('YGN', 'YellowGreen');
+			break;
+			case "LightBrown":      
+				mySheet.SetTheme('LBN', 'LightBrown');
+			break;
+
+			case "LightGray":      
+				mySheet.SetTheme('LGY', 'LightGray');
+			break;
+
+			case "LightGreen":      
+				mySheet.SetTheme('LGN', 'LightGreen');
+			break;
+
+			case "LightPurple":      
+				mySheet.SetTheme('LPP', 'LightPurple');
+			break;
+
+			case "LightSky":      
+				mySheet.SetTheme('LS', 'LightSky');
+			break;
+			case "LightRed":      
+				mySheet.SetTheme('LR', 'LightRed');
+			break;
+			
+			
+		}
+		if(sAction!="Round"){
+			document.getElementById("ib_product").style.boxShadow = "10px 10px 5px #888888;";
+		}
+	}
+
+	function mySheet_OnSearchEnd() {
+		mySheet.FitColWidth();
+	}
+
+	function mySheet_OnResize() {
+		mySheet.FitColWidth();
+	}
+</script>
+
+<body onLoad="LoadPage()">
+        <div class="page_title">
+            <span><a class="closeDepth" href="#">closeDepth</a></span>
+            <span class="title">Theme 기능 > <b>디자인 적용</b></span>
+        </div>
+                
+        <div class="main_content">
+            <div class="exp_product">
+                시트의 디자인을 변경 합니다.
+            </div>
+        
+            <div class="ib_function float_right">
+                <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
+                <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
+            </div>
+
+			<div class="clear hidden"></div>  
+            
+            <div class="ib_function2 border_sheet">
+				<table class="ib_column2">
+					<tr>
+						
+						<th class="r20">Theme 설정하기</th>
+						<td class="r20">
+							<select id="selTheme" class="contentsLeftText" onChange="doAction(this.value);">
+								<option value="">-Theme를 선택하세요-</option>
+								<option value="Main">Default</option>
+								<option value="Main2">Default2</option>
+								<option value="Main3">Default3</option>
+								<option value="Blue">Blue</option>
+								<option value="Brown">Brown</option>
+								<option value="Gray">Gray</option>
+								<option value="Green">Green</option>
+								<option value="LightBrown">LightBrown</option>
+								<option value="LightGray">LightGray</option>
+								<option value="LightGreen">LightGreen</option>
+								<option value="LightPurple">LightPurple</option>
+								<option value="LightRed">LightRed</option>
+								<option value="LightSky">LightSky</option>
+								<option value="Navy">Navy</option>
+								<option value="Orange">Orange</option>
+								<option value="Purple">Purple</option>
+								<option value="Yellow">Yellow</option>
+								<option value="YellowGreen">YellowGreen</option>
+								
+							</select>	
+						</td>
+						
+					 </tr>
+					<tr>
+				</table>
+           </div>
+
+			<p class="subtit_sheet">조회리스트</p>
+            <div class="ib_product" id="ib_product" style="box-shadow: 10px 10px 5px #888888;">
+						<script type="text/javascript"> createIBSheet("mySheet", "100%", "100%"); </script>
+            </div>
+        </div>
+        <!--main_content-->
+
+</body>
+</html>
+
+
+
+
+
+
+
+

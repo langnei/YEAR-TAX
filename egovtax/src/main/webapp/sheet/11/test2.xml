@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no' ?>
+<Excel>
+<IBSheetSet>
+    <StartRow>20</StartRow><!-- Sheet의 데이터를 표시할 엑셀의 시작 행 위치 -->
+    <Data></Data><!-- DirectDown2Excel Method를 이용할 경우 조회한 데이터 XML  -->
+</IBSheetSet>
+<PageSet>
+    <PaperSize>A4</PaperSize><!-- 엑셀의 용지 크기 설정 "A3, A4, B4, B5" -->
+    <Orientation>Landscape</Orientation><!-- 엑셀의 용지 방향 설정 : 세로 "Portrait" 가로 "Landscape" -->
+    <Margins Top='0' Header='0' Left='0' Right='0' Bottom='0' Footer='0'/><!-- 엑셀의 여백 설정 -->
+    <RowsRepeat Row1='10' Row2='11' /><!-- 엑셀의 반복 행 설정 : 시작 행 Row1 마지막 행 Row2 -->
+    <ColsRepeat Col1='3' Col2='4' /><!-- 엑셀의 반복 컬럼 설정 : 시작 컬럼 Col1 마지막 컬럼 Col2 -->
+    <DefaultRowHeight>19.5</DefaultRowHeight><!-- 엑셀의 기본 행 높이 설정 -->
+    <DefaultFont Name='굴림' Bold='False' Italic='False' size='10'  /><!-- 엑셀의 기본 글꼴 설정 : Name 글꼴 Bold 굵기 Italic  기울림 size 글자 크기 UnderLine 밑줄 "None | Single | Double" Strikethrough 취소선 Superscript 속성은 위 첨자 사용 여부 Subscript 속성은 아래 첨자 사용 여부 Color 글자색상 -->
+</PageSet>
+<CustomHeader>
+    <LeftSection>
+        <Font Name='궁서체' Size='13' Bold='True' UnderLine='None' Italic='False'  /><!-- Strikethrough='True' Superscript='False' Subscript='False' 지원안함 -->
+        <InputText>Excel Report 테스트</InputText>
+    </LeftSection>
+    <CenterSection>
+        <Font Name='굴림체' Size='10'/>
+        <InputText><![CDATA[&D &T]]></InputText>
+    </CenterSection>
+    <RightSection>
+        <Font Name='맑은 고딕' Size='11'/>
+        <InputText><![CDATA[파일명 : &F 중 &A 시트]]></InputText>
+    </RightSection>
+</CustomHeader>
+<CustomFooter>
+    <LeftSection>
+        <Font Name='바탕체' Size='12'/>
+        <InputText>(주)아이비리더스</InputText>
+    </LeftSection>
+    <CenterSection>
+        <Font Name='돋움체' Size='10' Bold="True" UnderLine='None' Italic='True' Color='0,0,255'/><!-- Strikethrough='True' Superscript='False' Subscript='False' 지원안함 -->
+        <InputText><![CDATA[&P / &N]]></InputText>
+    </CenterSection>
+  </CustomFooter>
+</Excel>

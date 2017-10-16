@@ -8,8 +8,12 @@
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />	
 <title>학교안전공제회MIS</title>
-<jsp:include page="/common/jsp/include_head.jsp" />
-</head>
+<link rel="stylesheet" href="/common/css/style.css"/>
+<script type="text/javascript" src="/common/js/public.js"></script>
+<script type="text/javascript" src="/common/js/commonFunc.js" charset='utf-8'></script>
+<script type="text/javascript" src='/common/js/ibleaders.js' charset='utf-8'></script>
+<script src="/sheet/sheet/ibsheetinfo.js" type="text/javascript"></script>
+<script src="/sheet/sheet/ibsheet.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 	var data = ${menuStr};	

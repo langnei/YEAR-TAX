@@ -11,7 +11,7 @@
 <script type="text/javascript" src="/common/js/public.js"></script>
 
 <!-- AXISJ JS -->
-<script type="text/javascript" src="/common/axisj-1.1.12/jquery/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="/common/axisj-1.1.12/jquery/jquery.min.js"></script> -->
 <script type="text/javascript" src="/common/axisj-1.1.12/dist/AXJ.min.js"></script>
 
 <!-- IBSHEET JS -->

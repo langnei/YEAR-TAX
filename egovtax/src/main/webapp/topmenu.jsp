@@ -11,18 +11,13 @@ String _emplName = (String)CommonSessionCookie.getSessionAttribute(request, "_em
 		document.menuForm.sysGubn.value = obj;
 		document.menuForm.submit();
 	}
-	/*
-	function changeWplac() {
-		document.menuForm.wplaGubn.value = $("#frm_WplacSel").val();
-		document.menuForm.submit();
-	}	
-	*/
+
 	function logOut() {
 
 		if(confirm("로그 아웃 하시겠습니까?")) {		
 			//window.open('about:blank','_self').close();
 
-			document.menuForm.action = "/mis/logout.do";
+			document.menuForm.action = "/tax/logout.do";
 			document.menuForm.submit();
 		}
 	}

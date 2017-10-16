@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />	
+
+<link rel="stylesheet" href="../../css/style.css"/>
+<script type="text/javascript" src="../js/common.js"></script>
+<script language="javascript" src="../sheet/ibsheetinfo.js"></script>
+<script language="javascript" src="../sheet/ibsheet.js"></script>
+<title>IBSheet7-Product</title>
+</head>
+
+<script language="javascript">
+	var pageheightoffset = 260;
+	/*Sheet 기본 설정 */
+	function LoadPage() {
+		var cols = [
+			{Type:"Status", Align:"Center"},
+			{Type:"DelCheck", Align:"Center"},
+			{Type:"Text", Width:170, TreeCol:1},
+			{Type:"Text", Width:60, Align:"Center"},
+			{Type:"Text", Width:60, Align:"Center"},
+			{Type:"Text", Width:60, Align:"Center"},
+			{Type:"Date", Width:100},
+			{Type:"Date", Width:100}
+		];
+		var headers = [
+			{Text:"상태|삭제|구/동|우편번호|시작|끝|등록일|최종변경일|SEQ|트리\n레벨", Align:"Center"}
+		];
+		mySheet.SetConfig({SearchMode:smLazyLoad,Page:30});
+		mySheet.InitHeaders(headers);
+		mySheet.InitColumns(cols);
+	}
+
+	/*Sheet 각종 처리*/
+	function doAction(sAction) {
+		switch(sAction) {
+			case "search":      //조회
+				mySheet.DoSearch("event_data.xml");
+				break;
+			case "reload":
+				mySheet.RemoveAll();
+				break;
+			case "save":
+				mySheet.DoSave("save.json");
+				break;
+			case "insert":
+				mySheet.DataInsert();
+				break;
+			case "clear":
+				document.getElementById("evt_log").value = "";
+				break;
+		}
+	}
+
+
+	function fnAppendLog(msg) {
+		var evt_log = document.getElementById("evt_log");
+		evt_log.value = msg + "\n" + evt_log.value;
+	}
+
+	// 마우스 이벤트
+	
+
+	function mySheet_OnClick(row, col, cellx, celly, cellw, cellh) {
+		var msg = "";
+
+		if (row == null || row < 0) return;
+
+		msg += "[OnClick] => ";
+		msg += "[" + row + ", " + col + "] ";
+
+		if (document.getElementById('chkMouse').checked == true)
+			fnAppendLog(msg);
+	}
+
+	function mySheet_OnDblClick(row, col, cellx, celly, cellw, cellh) {
+		var msg = "";
+
+		if (row == null || row < 0) return;
+
+		msg += "[OnDblClick] => ";
+		msg += "[" + row + ", " + col + "] ";
+
+		if (document.getElementById('chkMouse').checked == true)
+			fnAppendLog(msg);
+	}
+
+	function mySheet_OnMouseDown(button, shift, x, y) {
+		var msg = "";
+
+		msg += "[OnMouseDown] => ";
+		msg += "[Button:" + button + ", Shift:" + shift + "] ";
+
+		if (document.getElementById('chkMouse').checked == true)
+			fnAppendLog(msg);
+	}
+
+	function mySheet_OnMouseUp(button, shift, x, y) {
+		var msg = "";
+
+		msg += "[OnMouseUp] => ";
+		msg += "[Button:" + button + ", Shift:" + shift + "] ";
+
+		if (document.getElementById('chkMouse').checked == true)
+			fnAppendLog(msg);
+	}
+
+	function mySheet_OnMouseMove(button, shift, x, y) {
+		var msg = "";
+
+		msg += "[OnMouseMove] => ";
+		msg += "[X:" + x + ", Y:" + y + "] ";
+
+		if (document.getElementById('chkMouse').checked == true)
+			fnAppendLog(msg);
+	}
+
+	// 키보드 이벤트
+	function mySheet_OnKeyDown(row, col, key, shift) {
+		var msg = "";
+
+		if (row == null || row < 0) return;
+
+		msg += "[OnKeyDown] => ";
+		msg += "[" + row + ", " + col + "] : ";
+		msg += "[Key:" + key + ", Shift:" + shift + "] ";
+
+		if (document.getElementById('chkKeyboard').checked == true)
+			fnAppendLog(msg);
+	}
+
+	function mySheet_OnKeyUp(row, col, key, shift) {
+		var msg = "";
+
+		if (row == null || row < 0) return;
+
+		msg += "[OnKeyUp] => ";
+		msg += "[" + row + ", " + col + "] : ";
+		msg += "[Key:" + key + ", Shift:" + shift + "] ";
+
+		if (document.getElementById('chkKeyboard').checked == true)
+			fnAppendLog(msg);
+	}
+
+	// 기타 이벤트
+	function mySheet_OnAfterColumnMove(Col, NewPos) {
+		var msg = "";
+
+		msg += "[OnAfterColumnMove] => ";
+		msg += "[" + Col + ", " + NewPos + "] ";
+
+		if (document.getElementById('chkEtc').checked == true)
+			fnAppendLog(msg);
+	}
+	
+	function mySheet_OnSearchEnd(Code, Msg) {
+		var msg = "";
+
+		msg += "[OnSearchEnd] => ";
+		msg += "[" + Code + ", " + Msg + "] ";
+
+		if (document.getElementById('chkEtc').checked == true)
+			fnAppendLog(msg);
+	}
+	
+	function mySheet_OnSelectCell(oldrow, oldcol, row, col) {
+		var msg = "";
+
+		msg += "[OnSelectCell] => ";
+		msg += "[" + oldrow + ", " + oldcol + "] -> ";
+		msg += "[" + row + ", " + col + "] ";
+
+		if (document.getElementById('chkEtc').checked == true)
+			fnAppendLog(msg);
+	}
+
+	// 기타 이벤트
+	function mySheet_OnSort(col, arrow) {
+		var msg = "";
+
+		msg += "[OnSort] => ";
+		msg += "[" + col + ", " + arrow + "] ";
+
+		if (document.getElementById('chkEtc').checked == true)
+			fnAppendLog(msg);
+	}
+
+	function mySheet_OnBeforeExpand(row, expand) {
+		var msg = "";
+
+		if (row == null || row < 0) return;
+
+		msg += "[OnBeforeExpand] => ";
+		msg += "[" + row + " : " + expand + "] ";
+
+		if (document.getElementById('chkEtc').checked == true)
+			fnAppendLog(msg);
+	}
+
+	function mySheet_OnAfterExpand(row, expand) {
+		var msg = "";
+
+		if (row == null || row < 0) return;
+
+		msg += "[OnAfterExpand] => ";
+		msg += "[" + row + " : " + expand + "] ";
+
+		if (document.getElementById('chkEtc').checked == true)
+			fnAppendLog(msg);
+	}
+
+	function mySheet_OnUserResize(col, width) {
+		var msg = "";
+
+		msg += "[OnUserResize] => ";
+		msg += "[" + col + " : " + width + "] ";
+
+		if (document.getElementById('chkEtc').checked == true)
+			fnAppendLog(msg);
+	}
+
+	function mySheet_OnChange(row, col, value) {
+		var msg = "";
+
+		if (row == null || row < 0) return;
+
+		msg += "[OnChange] => ";
+		msg += "[" + row + ", " + col + "] => " + value;
+
+		if (document.getElementById('chkEtc').checked == true)
+			fnAppendLog(msg);
+	}
+</script>
+
+<body onload="LoadPage()">
+        <div class="page_title">
+            <span><a class="closeDepth" href="#">closeDepth</a></span>
+            <span class="title">이벤트(Event) > <b>다양한 이벤트</b></span>
+        </div>
+                
+        <div class="main_content">
+            <div class="exp_product">
+                마우스,키보드 입력에 따른 이벤트 호출순서를 확인한다. 
+            </div>
+        
+            <div class="ib_function float_right">
+                <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
+                <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
+            </div>
+
+			<div class="clear hidden"></div>  
+            
+            <div class="ib_function2 border_sheet">
+				<table class="ib_column2">
+					<tr>
+						<td><input class="checkbox" type="checkbox" checked="checked" id="chkMouse"/></td>
+						<td class="r20">마우스이벤트</td>
+						<td><input class="checkbox" type="checkbox" checked="checked" id="chkKeyboard"/></td>
+						<td class="r20">키보드이벤트</td>
+						<td><input class="checkbox" type="checkbox" checked="checked" id="chkEtc"/></td>
+						<td class="r20">기타이벤트</td>
+						<td><a href="javascript:doAction('clear');" class="f2_btn_white btn_sheet">Clear</a></td>
+					 </tr>
+				</table>
+           </div>
+
+			<p class="subtit_sheet">조회리스트</p>
+          <div class="ib_product">
+            	<div class="w50pro" style="height:100%">
+                	<div class="margin_r20" style="height:100%">
+											<script type="text/javascript"> createIBSheet("mySheet", "100%", "100%"); </script>
+                  </div>
+              </div>
+              <div class="w50pro" style="height:100%">
+              	<div  style=";height:100%">
+									<textarea id="evt_log" cols="40" style="width:100%;height:99%;border:1px solid #888888;"></textarea>
+								</div>
+            	</div> 
+	        </div>
+        </div>
+        <!--main_content-->
+
+</body>
+</html>
+
+
+
+
+
+
+
+

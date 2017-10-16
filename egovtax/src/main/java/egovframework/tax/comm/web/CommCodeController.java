@@ -127,10 +127,12 @@ public class CommCodeController {
 		String jkCode = (String)CommonSessionCookie.getSessionAttribute(req, "_empl_jkgb");
 		
 		if(sysGubn == null || sysGubn.equals("")) {
-				sysGubn = "07";
+				sysGubn = "02";
+			/*
 			if(jkCode != null && jkCode.equals("15101")){
 				sysGubn = "13"; 
 			}
+			*/
 		}
 			
 		String sysName = "";
@@ -141,7 +143,7 @@ public class CommCodeController {
 		
 		if(sysGubn.equals("01")) sysName = "kins"; // 인사관리
 		else if(sysGubn.equals("02")) sysName = "kpay"; // 급여관리			
-		else if(sysGubn.equals("04")) sysName = "kbac"; // 회계관리			
+		else if(sysGubn.equals("04")) sysName = "kbac"; // 회계관리	
 		else if(sysGubn.equals("05")) sysName = "kmac"; // 예산관리
 		else if(sysGubn.equals("06")) sysName = "ktac"; // 세무관리
 		else if(sysGubn.equals("07")) sysName = "kgew"; // 공통관리
@@ -152,13 +154,12 @@ public class CommCodeController {
 		CommonSessionCookie.setSessionAttribute(req, "_sys_name", sysName);
 		//데이터 조회
 		List<?> menuList = commCodeService.selectMenuList(searchVO); 
-		System.out.println("메뉴리스트SIZE=="+menuList.size());
+		//System.out.println("메뉴리스트SIZE=="+menuList.size());
 		
 		StringBuffer menuStr = new StringBuffer();
 		menuStr.append("{Data:[");
 		String expand = "Expand:0";
 		String tImage = "0";
-		String mmenuSelect = "<select id=\"mmenu_select\" class=\"selectbox_mmenu\" onChange=\"__mmenuChange()\" >";
 		for(int i=0; i<menuList.size(); i++) {
 			
 			EgovMap resultMap  =  (EgovMap)menuList.get(i);
@@ -174,19 +175,20 @@ public class CommCodeController {
 			}
 			if(resultMap.get("url").equals(" ")) {
 				menuStr.append("{Level:"+resultMap.get("level")+",\"TITLE#Image\":"+tImage+","+expand+",TITLE:\""+resultMap.get("title")+"\",POPYN:9}");
-				mmenuSelect += "<option style=\"padding: 10px;\" value=\""+resultMap.get("bCode")+"\">"+resultMap.get("title")+"</option>";
 			} else {
-				menuStr.append("{Level:"+resultMap.get("level")+",\"TITLE#Image\":"+resultMap.get("image")+",URL:\"/mis/"+sysName+"/"+resultMap.get("url")+".do\",TITLE:\""+resultMap.get("title")+"\",POPYN:3}");
+				menuStr.append("{Level:"+resultMap.get("level")+",\"TITLE#Image\":"+resultMap.get("image")+",URL:\"/tax/"+sysName+"/"+resultMap.get("url")+".do\",TITLE:\""+resultMap.get("title")+"\",POPYN:3}");
 			}
 			
 			if(i < (menuList.size() - 1)) menuStr.append(",");
 		}
 		menuStr.append("]}");
+		
+		//System.out.println("메뉴쿼리=="+menuStr.toString());
 		model.addAttribute("menuStr", menuStr.toString());
 		// 중메뉴 select box
-		mmenuSelect += "</select>";
+		//mmenuSelect += "</select>";
 		
-		System.out.println("mmenuSelect=="+mmenuSelect);
+		//System.out.println("mmenuSelect=="+mmenuSelect);
 		//CommonSessionCookie.setSessionAttribute(req, "_mmenu_select", mmenuSelect);
 		
 		String acctGubn = "";
@@ -195,6 +197,7 @@ public class CommCodeController {
 	    map.put("work_plac", wPlac); //사업장
 	    map.put("busi_year", strToday.substring(0, 4)); //년도
 	    map.put("empl_numb", eNumb); //사번
+	    
 	    //데이터 조회
 		List<?> codeList = commCodeService.commBusiCombo(map);
 		System.out.println("코드리스트SIZE=="+codeList.size());
