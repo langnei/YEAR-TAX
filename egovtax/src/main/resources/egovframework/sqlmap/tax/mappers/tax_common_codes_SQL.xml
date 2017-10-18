@@ -16,8 +16,10 @@
 			   AND C.DEPA_CODE = B.DEPA_CODE
 			   AND C.JEJK_GUBN = '1'
 			   AND A.LOGI_NAME = #{USER_ID}
-			   AND A.PASS_NAME = #{USER_PASSWORD}
+			   AND A.PASS_NAME = #{USER_PASSWORD} 
 		]]>		   		
+		<!-- AND A.PASS_NAME = #{USER_PASSWORD} -->
+		<!-- AND dbsec.sdb_crypto.decrypt(A.PASS_NAME,'MISADMIN','ZMC','PASS_NAME') = #{USER_PASSWORD} -->
 	</select>
 	
 	<select id="selectMenuList" parameterType="searchVO" resultType="egovMap">
@@ -55,43 +57,8 @@
 			WHERE	A.CHAR_CODE = B.TONG_CODE (+) 
 			 AND    A.USER_SABN = #{searchKeyword}                    
 			 AND    SUBSTR(B.TONG_CODE, 4,2) = #{sysGubn} 
-			GROUP BY  A.CHAR_CODE, NVL(B.TONG_1NAM,'미분류'),DECODE(NVL(B.TONG_PRES,1),0,1,NVL(B.TONG_PRES,1)), SUBSTR(B.TONG_CODE, 4,5)
-			    
-			UNION 
-			
-			SELECT 	A.CHAR_CODE 	BCODE,  
-					NVL(B.TONG_1NAM,'미분류') BNAME,                                  
-					DECODE(NVL(B.TONG_PRES,1),0,1,NVL(B.TONG_PRES,1))  LVL,  
-					'2'   			SUB,  
-					A.PROG_IDEN PROG_ID,	F.PROG_NAME, 
-					SUBSTR(B.TONG_CODE, 4,5)  	SEQ1,                                 
-					NVL(G.PROG_SEQ,999)  		SEQ2  
-			FROM   ZML A, ZMB B, ZMG G, ZMF F, ZMI C, ZMJ D  
-			WHERE  A.CHAR_CODE = B.TONG_CODE (+) 
-			 AND   G.CHAR_CODE = B.TONG_CODE  
-			 AND   A.PROG_IDEN = F.PROG_IDEN 
-			 AND   G.PROG_IDEN = A.PROG_IDEN
-			 AND   A.USER_SABN = C.GRUP_NUMB
-			 AND   C.GRUP_NUMB = D.GRUP_NUMB 
-			 AND   SUBSTR(B.TONG_CODE, 4,2) = #{sysGubn} 
-			 AND   D.EMPL_NUMB = #{searchKeyword}           
-			UNION  
-			SELECT 	A.CHAR_CODE  	BCODE,  
-					NVL(B.TONG_1NAM,'미분류')  	BNAME,                                
-					DECODE(NVL(B.TONG_PRES,1),0,1,NVL(B.TONG_PRES,1)) -1	   LVL, 
-					'1'  	SUB,  
-					' ' 	PROG_ID,	NVL(B.TONG_1NAM,'미분류') 	PROG_NAME, 
-					SUBSTR(B.TONG_CODE, 4,5)  SEQ1, 
-					0 SEQ2 
-			FROM   ZML A, ZMB B, ZMI C, ZMJ D  
-			WHERE  A.CHAR_CODE = B.TONG_CODE (+) 
-			 AND   A.USER_SABN = C.GRUP_NUMB
-			 AND   C.GRUP_NUMB = D.GRUP_NUMB 			
-			 AND   D.EMPL_NUMB = #{searchKeyword}                    
-			 AND   SUBSTR(B.TONG_CODE, 4,2) = #{sysGubn} 
-			GROUP BY  A.CHAR_CODE, NVL(B.TONG_1NAM,'미분류'),DECODE(NVL(B.TONG_PRES,1),0,1,NVL(B.TONG_PRES,1)), SUBSTR(B.TONG_CODE, 4,5)    
-			ORDER BY  SEQ1,    SEQ2 			
-		 )
+			GROUP BY  A.CHAR_CODE, NVL(B.TONG_1NAM,'미분류'),DECODE(NVL(B.TONG_PRES,1),0,1,NVL(B.TONG_PRES,1)), SUBSTR(B.TONG_CODE, 4,5)			
+		   )
 		]]>	
 	</select>
 	
