@@ -85,6 +85,15 @@ public class CommCodeServiceImpl implements CommCodeService {
         return commCodeMapper.selectMenuList(searchVO);
     }     
     /**
+	 * 메뉴목록을 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 VO
+	 * @return 글 목록
+	 * @exception Exception
+	 */    
+    public List<?> selectSubMenuList(CommDefaultVO searchsubVO) throws Exception {
+        return commCodeMapper.selectSubMenuList(searchsubVO);
+    }        
+    /**
 	 * 사업구분을 가져와 combo 환경에 맞춰준다.
 	 * @param searchVO - 조회할 정보가 담긴 VO
 	 * @return 글 목록

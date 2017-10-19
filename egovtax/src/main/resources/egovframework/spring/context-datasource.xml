@@ -32,6 +32,11 @@
         <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
         <property name="username" value="mis_tax"/>
         <property name="password" value="mis_tax"/>
+        <!--        
+        <property name="url" value="jdbc:oracle:thin:@192.168.99.32:1521:orcl" />
+        <property name="username" value="misadmin"/>
+        <property name="password" value="dev_mis_manager"/>
+        -->              
     </bean>
     
 	<!--     

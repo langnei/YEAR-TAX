@@ -48,6 +48,8 @@ public interface CommCodeMapper{
     public List<?> loginCheck(Map map) throws Exception;
     //메뉴목록을 조회한다.
     public List<?> selectMenuList(CommDefaultVO searchVO) throws Exception;
+    //하위메뉴목록을 조회한다.
+    public List<?> selectSubMenuList(CommDefaultVO searchsubVO) throws Exception;    
     //사업리스트를 가져온다.(combo)
     public List<?> commBusiCombo(HashMap map) throws Exception;  
     //개인에 대한 사업장을 가져온다.

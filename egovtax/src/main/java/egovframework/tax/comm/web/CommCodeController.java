@@ -127,7 +127,7 @@ public class CommCodeController {
 		String jkCode = (String)CommonSessionCookie.getSessionAttribute(req, "_empl_jkgb");
 		
 		if(sysGubn == null || sysGubn.equals("")) {
-				sysGubn = "02";
+				sysGubn = "11";
 			/*
 			if(jkCode != null && jkCode.equals("15101")){
 				sysGubn = "13"; 
@@ -137,9 +137,10 @@ public class CommCodeController {
 			
 		String sysName = "";
 		CommDefaultVO searchVO = new CommDefaultVO();
-		searchVO.setSysGubn(sysGubn);
+		CommDefaultVO searchsubVO = new CommDefaultVO();
 		
-		System.out.println("sysGubn=="+sysGubn);
+		searchVO.setSysGubn(sysGubn);
+		searchsubVO.setSysGubn(sysGubn);
 		
 		if(sysGubn.equals("01")) sysName = "kins"; // 인사관리
 		else if(sysGubn.equals("02")) sysName = "kpay"; // 급여관리			
@@ -149,44 +150,53 @@ public class CommCodeController {
 		else if(sysGubn.equals("07")) sysName = "kgew"; // 공통관리
 		else if(sysGubn.equals("12")) sysName = "kmem"; // 회원관리	
 		else if(sysGubn.equals("13")) sysName = "keis"; // 경영관리
-		else if(sysGubn.equals("11")) sysName = "ksys"; ; // 시스템관리
+		else if(sysGubn.equals("11")) sysName = "ksys"; // 시스템관리
+		else if(sysGubn.equals("15")) sysName = "ktax"; // 연말정산관리
+		
 		searchVO.setSearchKeyword(eNumb);
+		searchsubVO.setSearchKeyword(eNumb);
+		
 		CommonSessionCookie.setSessionAttribute(req, "_sys_name", sysName);
 		//데이터 조회
 		List<?> menuList = commCodeService.selectMenuList(searchVO); 
-		//System.out.println("메뉴리스트SIZE=="+menuList.size());
+		//System.out.println("메뉴리스트=="+menuList.toString());
 		
 		StringBuffer menuStr = new StringBuffer();
-		menuStr.append("{Data:[");
-		String expand = "Expand:0";
-		String tImage = "0";
+
+		//menuStr.append("{Data:[");		
+		
 		for(int i=0; i<menuList.size(); i++) {
 			
 			EgovMap resultMap  =  (EgovMap)menuList.get(i);
-			
-			//System.out.println("i값=="+i);
-			
-			if(i==0) {
-				expand = "Expand:1";
-				tImage = "1";
-			} else {
-				expand = "Expand:0";
-				tImage = "0";
-			}
+						
 			if(resultMap.get("url").equals(" ")) {
-				menuStr.append("{Level:"+resultMap.get("level")+",\"TITLE#Image\":"+tImage+","+expand+",TITLE:\""+resultMap.get("title")+"\",POPYN:9}");
-			} else {
-				menuStr.append("{Level:"+resultMap.get("level")+",\"TITLE#Image\":"+resultMap.get("image")+",URL:\"/tax/"+sysName+"/"+resultMap.get("url")+".do\",TITLE:\""+resultMap.get("title")+"\",POPYN:3}");
+				
+				menuStr.append("<li class='treeview'>");
+				menuStr.append("<a href='#'>");
+				menuStr.append("<i class='fa fa-folder'></i> <span>"+resultMap.get("title")+"</span>");
+				menuStr.append("<span class='pull-right-container'>");
+				menuStr.append("<i class='fa fa-angle-left pull-right'></i>");
+				menuStr.append("</span>");
+				menuStr.append("</a>");
+				menuStr.append("<ul class='treeview-menu'>");
+
+				searchsubVO.setCodeGubn((String) resultMap.get("bCode"));
+				//하위데이터 조회
+				List<?> submenuList = commCodeService.selectSubMenuList(searchsubVO); 		
+
+				for(int j=0; j<submenuList.size(); j++) {
+					
+					EgovMap resultsubMap  =  (EgovMap)submenuList.get(j);
+					
+					menuStr.append("<li><a href='/tax/"+sysName+"/"+resultsubMap.get("url")+".do'><i class='fa fa-file-o'></i>"+resultsubMap.get("title")+"</a></li>");
+				}
+				
+				menuStr.append("</ul>");
+				menuStr.append("</li>");				
 			}
-			
-			if(i < (menuList.size() - 1)) menuStr.append(",");
 		}
-		menuStr.append("]}");
-		
-		//System.out.println("메뉴쿼리=="+menuStr.toString());
+
 		model.addAttribute("menuStr", menuStr.toString());
-		// 중메뉴 select box
-		//mmenuSelect += "</select>";
 		
 		//System.out.println("mmenuSelect=="+mmenuSelect);
 		//CommonSessionCookie.setSessionAttribute(req, "_mmenu_select", mmenuSelect);
@@ -200,7 +210,6 @@ public class CommCodeController {
 	    
 	    //데이터 조회
 		List<?> codeList = commCodeService.commBusiCombo(map);
-		System.out.println("코드리스트SIZE=="+codeList.size());
 		
 		if(bsgbGubn != null && !bsgbGubn.equals("")) {
 			acctGubn = bsgbGubn;
@@ -218,9 +227,6 @@ public class CommCodeController {
 		cSele = CommCodeUtil.makeCodeSelect(codeList, wPlac);
 
 		model.addAttribute("wplaSel", cSele);
-		
-		System.out.println("codeList=="+codeList);
-		System.out.println("sysName=="+sysName);
 		
 		return "/tax/"+sysName+"/index";
 	}

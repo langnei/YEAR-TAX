@@ -157,25 +157,14 @@
       </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      
+
       <!-- 사이드바 -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <!-- 트리메뉴 -->
-        
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-folder"></i> <span>Dashboard</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="index.html"><i class="fa fa-file-o"></i> Dashboard v1</a></li>
-            <li><a href="index.html"><i class="fa fa-file-o"></i> Dashboard v2</a></li>
-          </ul>
-        </li>
-        
+
+        ${menuStr}
+
         <!--
         <li class="treeview">
           <a href="#">
@@ -192,7 +181,7 @@
         -->
         <!-- 트리메뉴 끝 -->
       </ul>
-      
+
     </section>
     <!-- /.sidebar -->
   </aside>

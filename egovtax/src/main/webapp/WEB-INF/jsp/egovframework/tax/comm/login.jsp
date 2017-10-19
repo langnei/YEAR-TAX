@@ -83,7 +83,7 @@
     <!-- /.social-auth-links -->
 
   </div>
-  <!-- /.login-box-body -->
+  <!-- /.login-box-body --> 
 </div>
 <!-- /.login-box -->
 

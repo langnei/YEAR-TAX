@@ -50,6 +50,8 @@ public interface CommCodeService {
     List<?> loginCheck(Map<String,Object> map) throws Exception;    
     /**메뉴조회*/
     List<?> selectMenuList(CommDefaultVO searchVO) throws Exception;
+    /**하위메뉴조회*/
+    List<?> selectSubMenuList(CommDefaultVO searchsubVO) throws Exception;
     /**사업구분 콤보환경*/
     List<?> commBusiCombo(HashMap map) throws Exception;
     /**개인에 대한 사업장을 가져온다.*/

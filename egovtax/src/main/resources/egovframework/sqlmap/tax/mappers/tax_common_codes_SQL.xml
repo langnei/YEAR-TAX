@@ -31,21 +31,6 @@
 				PROG_NAME AS "title", 
 				BCODE B_CODE
 			FROM  (
-			SELECT 	A.CHAR_CODE 	BCODE,  
-					NVL(B.TONG_1NAM,'미분류') BNAME,                                  
-					DECODE(NVL(B.TONG_PRES,1),0,1,NVL(B.TONG_PRES,1))  LVL,  
-					'2'   			SUB,  
-					A.PROG_IDEN PROG_ID,	F.PROG_NAME, 
-					SUBSTR(B.TONG_CODE, 4,5)  	SEQ1,                                 
-					NVL(G.PROG_SEQ,999)  		SEQ2  
-			FROM   ZML A, ZMB B, ZMG G, ZMF F  
-			WHERE  A.CHAR_CODE  = 	B.TONG_CODE (+) 
-			 AND   G.CHAR_CODE = B.TONG_CODE  
-			 AND   A.PROG_IDEN = F.PROG_IDEN 
-			 AND   G.PROG_IDEN = A.PROG_IDEN 
-			 AND   A.USER_SABN = #{searchKeyword}         
-			 AND   SUBSTR(B.TONG_CODE, 4,2) = #{sysGubn}          
-			UNION  
 			SELECT 	A.CHAR_CODE  	BCODE,  
 					NVL(B.TONG_1NAM,'미분류')  	BNAME,                                
 					DECODE(NVL(B.TONG_PRES,1),0,1,NVL(B.TONG_PRES,1)) -1	   LVL, 
@@ -62,6 +47,34 @@
 		]]>	
 	</select>
 	
+	<select id="selectSubMenuList" parameterType="searchsubVO" resultType="egovMap">
+		<![CDATA[
+			SELECT 
+				LVL - 1 as "level",
+				SUB as "image", 
+				DECODE(PROG_ID,' ',' ', PROG_ID) as  "url",
+				PROG_NAME AS "title", 
+				BCODE B_CODE
+			FROM  (
+			SELECT 	A.CHAR_CODE 	BCODE,  
+					NVL(B.TONG_1NAM,'미분류') BNAME,                                  
+					DECODE(NVL(B.TONG_PRES,1),0,1,NVL(B.TONG_PRES,1))  LVL,  
+					'2'   			SUB,  
+					A.PROG_IDEN PROG_ID,	F.PROG_NAME, 
+					SUBSTR(B.TONG_CODE, 4,5)  	SEQ1,                                 
+					NVL(G.PROG_SEQ,999)  		SEQ2  
+			FROM   ZML A, ZMB B, ZMG G, ZMF F  
+			WHERE  A.CHAR_CODE  = 	B.TONG_CODE (+) 
+			 AND   G.CHAR_CODE = B.TONG_CODE  
+			 AND   A.PROG_IDEN = F.PROG_IDEN 
+			 AND   G.PROG_IDEN = A.PROG_IDEN 
+			 AND   A.USER_SABN = #{searchKeyword}       
+			 AND   SUBSTR(B.TONG_CODE, 4,2) = #{sysGubn}
+			 AND   A.CHAR_CODE = #{codeGubn}		
+		   )
+		]]>	
+	</select>
+		
 	<select id="commBusiCombo" parameterType="java.util.HashMap" resultType="egovMap">
 		<![CDATA[
 			 SELECT BUSI_NUMB COMM_CODE, BUSI_NAME COMM_NAME
