@@ -13,20 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package egovframework.tax.comm.service.impl;
+package egovframework.tax.ksys.service;
 
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Repository;
-import egovframework.tax.comm.service.CommVO;
-import egovframework.tax.comm.service.CommDefaultVO;
-import egovframework.rte.psl.dataaccess.mapper.Mapper;
-
 /**
- * @Class Name : SampleDAO.java
- * @Description : Sample DAO Class
+ * @Class Name : EgovSampleService.java
+ * @Description : EgovSampleService Class
  * @Modification Information
  * @
  * @  수정일      수정자              수정내용
@@ -40,21 +35,15 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
  *
  *  Copyright (C) by MOPAS All right reserved.
  */
-
-@Mapper("commCodeMapper")
-public interface CommCodeMapper{
-
-    //로그인 정보를 확인한다.
-    public List<?> loginCheck(Map map) throws Exception;
-    //메뉴목록을 조회한다.
-    public List<?> selectMenuList(CommDefaultVO searchVO) throws Exception;
-    //하위메뉴목록을 조회한다.
-    public List<?> selectSubMenuList(CommDefaultVO searchsubVO) throws Exception;    
-    //사업리스트를 가져온다.(combo)
-    public List<?> commBusiCombo(HashMap map) throws Exception;  
-    //개인에 대한 사업장을 가져온다.
-    public List<?> commWplacCombo(HashMap map) throws Exception;
+public interface SystemService {
     
-    public List<?> depaCodeCombo(HashMap map) throws Exception;
-  	
+    /**
+	 * 메뉴를 가져온다.
+	 * @param searchVO - 조회할 정보가 담긴 VO
+	 * @return 글 목록
+	 * @exception Exception
+	 */   
+
+	List<?> syia030_Select(Map<String, Object> map) throws Exception;
+	
 }

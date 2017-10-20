@@ -57,4 +57,5 @@ public interface CommCodeService {
     /**개인에 대한 사업장을 가져온다.*/
     List<?> commWplacCombo(HashMap map) throws Exception;
    
+    List<?> depaCodeCombo(HashMap map) throws Exception;
 }

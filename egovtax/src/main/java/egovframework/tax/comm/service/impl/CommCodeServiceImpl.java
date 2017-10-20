@@ -112,5 +112,14 @@ public class CommCodeServiceImpl implements CommCodeService {
         return commCodeMapper.commWplacCombo(map);
     }        
     
+    /**
+	 * 개인에 대한 사업장을 가져온다.
+	 * @param searchVO - 조회할 정보가 담긴 VO
+	 * @return 글 목록
+	 * @exception Exception
+	 */
+    public List<?> depaCodeCombo(HashMap map) throws Exception {
+        return commCodeMapper.depaCodeCombo(map);
+    }           
     
 }

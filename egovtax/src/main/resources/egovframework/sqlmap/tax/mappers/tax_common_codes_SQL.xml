@@ -101,4 +101,14 @@
 		]]>		
 	</select>		
 	
+	<select id="depaCodeCombo" parameterType="java.util.HashMap" resultType="egovMap">
+		<![CDATA[
+			 SELECT 
+			 DEPA_CODE COMM_CODE, 
+			 DEPA_NAME COMM_NAME
+			  FROM  ZME 
+			 ORDER BY DEPA_NAME
+		]]>
+	</select>	
+	
 </mapper>
