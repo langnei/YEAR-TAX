@@ -192,7 +192,7 @@ public class CommCodeController {
 					//menuStr.append("<li><a href='javascript:open_iframe(\"www.naver.com\")>'<i class='fa fa-file-o'></i>"+resultsubMap.get("title")+"</a></li>");
 				}
 				
-				menuStr.append("</ul>");
+				menuStr.append("</ul>"); 
 				menuStr.append("</li>");				
 			}
 		}
