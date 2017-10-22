@@ -1,100 +1,102 @@
-<%@page import="egovframework.tax.comm.web.CommonSessionCookie"%>
-<% 
-String _emplName = (String)CommonSessionCookie.getSessionAttribute(request, "_empl_name");
-%>
 <%@page contentType="text/html;charset=utf-8"%>
-<script type="text/javascript" src="/common/jquery/js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="/common/js/etc.js"></script>
-<script type="text/javascript">
 
-	function goMenu(obj) {
-		document.menuForm.sysGubn.value = obj;
-		document.menuForm.submit();
-	}
-
-	function logOut() {
-
-		if(confirm("로그 아웃 하시겠습니까?")) {		
-			//window.open('about:blank','_self').close();
-
-			document.menuForm.action = "/tax/logout.do";
-			document.menuForm.submit();
-		}
-	}
-	
-	function MM_preloadImages() { //v3.0
-	  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
-	    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
-	    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
-	}
-
-	function MM_swapImgRestore() { //v3.0
-	  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
-	}
-
-	function MM_findObj(n, d) { //v4.01
-	  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-	    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-	  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-	  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
-	  if(!x && d.getElementById) x=d.getElementById(n); return x;
-	}
-
-	function MM_swapImage() { //v3.0
-	  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
-	   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
-	}
-	 	
-	var toggle_tcnt = 0;
-	function topMenuToggle() { 
-		toggle_tcnt++;
-		if(toggle_tcnt % 2 == 0) {
-			$("#contactArea").animate({height: "69px"}, {queue:false, duration: 1000, easing: 'swing'});
-			$(".top_show_close").animate({top: "50px"}, {queue:false, duration: 1000, easing: 'swing'});
-			$("#top_open_close").attr("src","/image/btn_close_top.gif");
-		} else {
-			$("#contactArea").animate({height: "15px"}, {queue:false, duration: 1000, easing: 'swing'});
-			$(".top_show_close").animate({top: "0px"}, {queue:false, duration: 1000, easing: 'swing'});				
-			$("#top_open_close").attr("src","/image/btn_show_top.gif");
-		}
-		
-	    setTimeout( function() {
-	    	i_content.smartsheetsize(1);
-	    }, 600); 
-		 
-	}
-	
-</script>
-
-<body onload="MM_preloadImages('/image/menu_01_ov.gif','/image/menu_02_ov.gif','/image/menu_03_ov.gif','/image/menu_04_ov.gif','/image/menu_05_ov.gif','/image/menu_06_ov.gif','/image/menu_07_ov.gif','/image/menu_08_ov.gif','/image/menu_09_ov.gif')" >
-	<div id="contactArea" class="layout_top">
-		<div class="toplogo"><a href="#"><img src="/image/top_logo.png" /></a></div>
-		<div class="head">
-		  <div id="topmenu_2">
-		      <ul>
-	             <!-- li ><a href="javascript:goMenu('13')" ><img src="/image/menu_01.gif" id="Image5" onmouseover="MM_swapImage('Image5','','/image/menu_01_ov.gif',1)" onmouseout="MM_swapImgRestore()" /></a></li -->  
-	             <li ><a href="javascript:goMenu('07')" ><img src="/image/menu_02.gif" id="Image6" onmouseover="MM_swapImage('Image6','','/image/menu_02_ov.gif',1)" onmouseout="MM_swapImgRestore()" /></a></li>   
-	             <li ><a href="javascript:goMenu('04')" ><img src="/image/menu_03.gif" id="Image7" onmouseover="MM_swapImage('Image7','','/image/menu_03_ov.gif',1)" onmouseout="MM_swapImgRestore()" /></a></li>   
-	             <li ><a href="javascript:goMenu('06')" ><img src="/image/menu_04.gif" id="Image8" onmouseover="MM_swapImage('Image8','','/image/menu_04_ov.gif',1)" onmouseout="MM_swapImgRestore()" /></a></li>   
-				 <li ><a href="javascript:goMenu('05')" ><img src="/image/menu_05.gif" id="Image9" onmouseover="MM_swapImage('Image9','','/image/menu_05_ov.gif',1)" onmouseout="MM_swapImgRestore()" /></a></li>   
-	             <li ><a href="javascript:goMenu('01')" ><img src="/image/menu_06.gif" id="Image10" onmouseover="MM_swapImage('Image10','','/image/menu_06_ov.gif',1)" onmouseout="MM_swapImgRestore()" /></a></li>    
-	             <!-- li ><a href="javascript:goMenu('12')" ><img src="/image/menu_07.gif" id="Image11" onmouseover="MM_swapImage('Image11','','/image/menu_07_ov.gif',1)" onmouseout="MM_swapImgRestore()" /></a></li -->
-	             <li ><a href="javascript:goMenu('02')" ><img src="/image/menu_08.gif" id="Image12" onmouseover="MM_swapImage('Image12','','/image/menu_08_ov.gif',1)" onmouseout="MM_swapImgRestore()" /></a></li>
-			     <li ><a href="javascript:goMenu('11')" ><img src="/image/menu_09.gif" id="Image13" onmouseover="MM_swapImage('Image13','','/image/menu_09_ov.gif',1)" onmouseout="MM_swapImgRestore()" /></a></li> 
-	             <li ><div class="top_show_close"><a href="#" onClick="topMenuToggle();" ><img id="top_open_close" src="/image/btn_close_top.gif"  /></a></div>	
-	             </li> 
-		      </ul>                
-		 </div>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+		  <ul class="nav navbar-nav">
+			<li><a href="#"><i class="fa fa-calculator"></i> 연말정산</a></li>
+			<li><a href="#"><i class="fa fa-cog"></i> 시스템관리</a></li>
+		  </ul>
 		</div>
-		<div id="subtop_message" >
-			<span class="logout"><a href="javascript:logOut()">로그아웃</a></span>
-			<!-- span class="login_name"><%=_emplName %>님 로그인 중</span -->
-		</div>
-	</div>
-	
-	<form name="menuForm" method="post" action="/tax/index.do" target="_self">
-		<input type="hidden" name="sysGubn" value="" />
-		<input type="hidden" name="bsgbGubn" value="" />
-		<input type="hidden" name="wplaGubn" value="" />
-    </form>	
-</body>
+		<!-- /.navbar-collapse -->
+
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- Messages: style can be found in dropdown.less-->
+          <!-- 탑 메세지 -->
+
+          <!-- Notifications: style can be found in dropdown.less -->
+          <!-- 탑 알림 -->
+          <!-- Tasks: style can be found in dropdown.less -->
+          <!-- 탑 업데이트 -->
+          <!-- User Account: style can be found in dropdown.less -->
+          <!-- 유저 환경설정 -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <span class="hidden-xs">Alexander Pierce</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                <p>
+                  Alexander Pierce - Web Developer
+                  <small>Member since Nov. 2012</small>
+                </p>
+              </li>
+              <!-- Menu Body -->
+              <li class="user-body">
+                <div class="row">
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Followers</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Sales</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Friends</a>
+                  </div>
+                </div>
+                <!-- /.row -->
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+          <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <!-- 왼쪽메뉴 -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <!-- 프로필 사진 -->
+          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <!-- 프로필 이름 -->
+          <p>Alexander Pierce</p>
+          <!-- 프로필 상태 -->
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <!-- search form -->
+      <!-- 프로필 검색 -->
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+          <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form>
+      <!-- /.search form -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
