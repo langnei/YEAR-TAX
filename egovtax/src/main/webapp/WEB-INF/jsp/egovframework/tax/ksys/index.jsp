@@ -38,6 +38,14 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- iframe height 100% -->
+  <link rel="stylesheet" href="../../common/css/iframe.css">
+
+  <script type="text/javascript">
+      $(document).ready(function(){
+
+      });
+  </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -56,30 +64,14 @@
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-      
+
       <jsp:include page="/topmenu.jsp" />
 
       <!-- 사이드바 -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <!-- 트리메뉴 -->
-
         ${menuStr}
-
-        <!--
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-folder"></i> <span>Tables</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="pages/tables/simple.html"><i class="fa fa-file-o"></i> Simple tables</a></li>
-            <li><a href="pages/tables/data.html"><i class="fa fa-file-o"></i> Data tables</a></li>
-          </ul>
-        </li>
-        -->
         <!-- 트리메뉴 끝 -->
       </ul>
 
@@ -91,7 +83,8 @@
   <div class="content-wrapper">
     <!-- 메인메뉴 -->
     <!-- Main content -->
-
+    <!-- <iframe frameborder="0" src="" width="100%" height="100%" name="i_content" id="i_content" scrolling="auto"></iframe> -->
+    <iframe class="iframeH100" name="i_content" id="i_content" scrolling="auto"></iframe>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
