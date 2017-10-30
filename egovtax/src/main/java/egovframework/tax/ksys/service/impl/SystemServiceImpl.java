@@ -71,6 +71,6 @@ public class SystemServiceImpl implements SystemService {
 	 * @exception Exception
 	 */
 	public List<?> syia030_Select(Map<String, Object> map) throws Exception {
-		return systemServiceMapper.syia030_Select(map);
+		return systemServiceMapper.syia030Select(map);
 	}
 }

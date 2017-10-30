@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.tax.ksys.service.impl.SystemServiceMapper">
+
+	<select id="syia030Select" parameterType="egovMap" resultType="java.util.Map">
+		<![CDATA[
+			  SELECT A.EMPL_NUMB, 
+					 A.DEPA_CODE,    
+					 A.EMPL_NAME,  
+					 A.LOGI_NAME,   
+					 A.PASS_NAME,  
+					 A.HOLD_PRES,  
+					 A.INPU_MAN, 					   
+					 A.INPU_DATE,
+					 B.DEPA_NAME DEPA_NAME
+				FROM ZMC A, ZME B, INMAST C   
+			   WHERE A.DEPA_CODE = B.DEPA_CODE(+)
+			     AND A.EMPL_NUMB = C.EMPL_NUMB
+			     AND A.EMPL_NUMB LIKE #{frm_SearchEmpl} || '%'  
+			     AND A.DEPA_CODE LIKE #{frm_SearchDepa} || '%'  
+			     AND C.WORK_PLAC = #{frm_wPlac}
+			     AND A.HOLD_PRES = '1'
+			ORDER BY A.EMPL_NUMB 
+		]]>
+	</select>		
+	 
+</mapper>

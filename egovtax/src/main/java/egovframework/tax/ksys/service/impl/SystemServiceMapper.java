@@ -13,6 +13,6 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 @Mapper("systemServiceMapper")
 public interface SystemServiceMapper {
 	
-	public List<?> syia030_Select(Map map) throws Exception;
+	public List<?> syia030Select(Map map) throws Exception;
 	
 }

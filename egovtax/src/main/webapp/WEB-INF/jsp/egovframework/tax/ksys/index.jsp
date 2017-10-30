@@ -80,13 +80,11 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
     <!-- 메인메뉴 -->
     <!-- Main content -->
     <!-- <iframe frameborder="0" src="" width="100%" height="100%" name="i_content" id="i_content" scrolling="auto"></iframe> -->
     <iframe class="iframeH100" name="i_content" id="i_content" scrolling="auto"></iframe>
     <!-- /.content -->
-  </div>
   <!-- /.content-wrapper -->
   <jsp:include page="/footer.jsp" />
   <!-- Add the sidebar's background. This div must be placed

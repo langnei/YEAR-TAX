@@ -101,6 +101,7 @@ public class SystemController {
 		//데이터 조회
 		HashMap map = new HashMap();
 		map.put("work_plac", workPlac);
+		
 		List<?> codeList = commCodeService.depaCodeCombo(map);
 		String depaSele = CommCodeUtil.makeCodeSelect(codeList);
 		
@@ -109,5 +110,22 @@ public class SystemController {
 				
 		return "/tax/ksys/syia030";
 	}
+	
+	@RequestMapping(value = "/mis/ksys/syia030_Select.do")
+	public @ResponseBody ModelMap syia030_Select(@RequestParam Map<String,Object> map) throws Exception {
+		//IBSheetUtil ibUtil = new IBSheetUtil();
+		System.out.println(map.get("frm_SearchDepa"));		
+		//데이터 조회
+		List data = systemService.syia030_Select(map);
+		
+		System.out.println("셀렉트"+data);
+
+        //JSON 
+        //ibUtil.setCodeMessage("정상적으로 처리되었습니다."); 
+        //ibUtil.setData(data); 
+    
+        //JSON 반환 
+        return (ModelMap) data; 
+	}	
 
 }
