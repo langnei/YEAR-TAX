@@ -1,6 +1,6 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,15 +38,18 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- iframe height 100% -->
+  <link rel="stylesheet" href="../../common/css/iframe.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
   
   <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/ax5ui/ax5ui-grid/master/dist/ax5grid.css">
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
   <script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5core/master/dist/ax5core.min.js"></script>
-  <script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-grid/master/dist/ax5grid.min.js"></script>
- </head>
- <script type="text/javascript">
+  <script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-grid/master/dist/ax5grid.min.js"></script>  
+  
+</head>  
+<script type="text/javascript">
     $(document.body).ready(function () {
-        //var API_SERVER = "http://api-demo.ax5.io";
+        var API_SERVER = "http://api-demo.ax5.io";
         var firstGrid = new ax5.ui.grid();
  
         firstGrid.setConfig({
@@ -62,68 +65,24 @@
                 {key: "h", label: "field H"}
             ]
         });
-        
-        var gridList = [{a: "A", b: "A01", c:"C", d:"D", e:"E", f:"F", g:"G"}];
  
-        // {a: "A", b: "A01", c:"C", d:"D", e:"E", f:"F", g:"G"}
+        gridList = {a: "A", b: "A01", c:"C", d:"D", e:"E", f:"F", g:"G"};
         // 값이 없는 h 는 표현안됨
         firstGrid.setData(gridList);
         // 그리드 데이터 가져오기
-
+        /*
         $.ajax({
             method: "GET",
-            url: "/mis/ksys/syia030_Select.do",
+            url: API_SERVER + "/api/v1/ax5grid",
             success: function (res) {
-            	//alert(showObj(res));
                 firstGrid.setData(res);
             }
         });
+        */
     });
-
-   	function doAction(sAction) {
-   		switch(sAction) {
-   			case "search":      //조회
-   				var param = {url:"/mis/ksys/syia030_Select.do"
-   					,subparam:FormQueryStringEnc(document.frm)   //폼객체 안에 내용을 QueryString으로 바꾼다.
-   					,sheet:"mySheet"};
-
-   				DataSearch( param );
-   				
-   				break;
-   			case "save":
-   				var param = {url:"/mis/ksys/syia030_Save.do"
-   					,subparam:FormQueryStringEnc(document.frm)
-   					,sheet:"mySheet"};
-   				DataSave( param );
-   				
-   				break;
-   				
-   			case "reload":
-   				mySheet.RemoveAll();
-
-   				break;
-
-   			case "insert":
-   				mySheet.DataInsert();
-   				dataInit();
-   				break;				
-   				
-   		}
-   	}
-    	
-    function showObj(obj) {
-    	var str = "";
-    	for(key in obj) {
-    		str += key+"="+obj[key]+"\n";
-    	}
-
-    	alert(str);
-    	return;
-    }
-    
 </script>
 <body class="hold-transition skin-blue sidebar-mini">
-<!-- Content Wrapper. Contains page content -->
+
 	<div class="content-wrapper">
 	  <!-- Content Header (Page header) -->
 	  <section class="content-header">
@@ -195,16 +154,42 @@
 	  </section>
 	  <!-- /.content -->
 	</div>
-	<!-- /.content-wrapper -->
+
 <!-- jQuery 3 -->
 <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="../../bower_components/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script>
 <!-- Bootstrap 3.3.7 -->
 <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Morris.js charts -->
+<script src="../../bower_components/raphael/raphael.min.js"></script>
+<script src="../../bower_components/morris.js/morris.min.js"></script>
+<!-- Sparkline -->
+<script src="../../bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+<!-- jvectormap -->
+<script src="../../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="../../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="../../bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="../../bower_components/moment/min/moment.min.js"></script>
+<script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- datepicker -->
+<script src="../../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<!-- Slimscroll -->
+<script src="../../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="../../bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
+<script src="../../dist/js/adminlte.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="../../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
-</body>
-</html>
+</body>	  

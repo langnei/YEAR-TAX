@@ -14,7 +14,7 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../../dist/css/AdminLTE.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
@@ -40,32 +40,65 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <!-- iframe height 100% -->
   <link rel="stylesheet" href="../../common/css/iframe.css">
-
-  <script type="text/javascript">
-      $(document).ready(function(){
-
-      });
-  </script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
 </head>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#i_content").attr("src","/firstPage.jsp");
+		
+ 		$(".sidebar-toggle").click(function(){
+ 			
+			if(!$("body").hasClass("sidebar-collapse") === true){
+				$("iframe[name='i_content']").contents().find("body").attr("class","skin-blue sidebar-mini sidebar-collapse");
+			}else{
+				$("iframe[name='i_content']").contents().find("body").removeClass("sidebar-collapse");
+			}
+		});
+ 		
+ 		$(".treeview-menu>li").click(function(){
+ 			$(this).attr("class","active");
+		}); 		
+ 		
+ 		
+
+    });
+</script>
+
 <body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+ <div class="wrapper">
 
-  <header class="main-header">
-    <!-- Logo -->
-    <a href="index.html" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
-    </a>
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
+  <jsp:include page="/topmenu.jsp" />
 
-      <jsp:include page="/topmenu.jsp" />
+  <!-- Left side column. contains the logo and sidebar -->
+  <!-- 왼쪽메뉴 -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <!-- 프로필 사진 -->
+          <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <!-- 프로필 이름 -->
+          <p>Alexander Pierce</p>
+          <!-- 프로필 상태 -->
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <!-- search form -->
+      <!-- 프로필 검색 -->
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+          	  <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+              </span>
+        </div>
+      </form>
+      <!-- /.search form -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
 
       <!-- 사이드바 -->
       <ul class="sidebar-menu" data-widget="tree">
@@ -80,12 +113,13 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-    <!-- 메인메뉴 -->
+  <div class="content-iframe">
     <!-- Main content -->
-    <!-- <iframe frameborder="0" src="" width="100%" height="100%" name="i_content" id="i_content" scrolling="auto"></iframe> -->
-    <iframe class="iframeH100" name="i_content" id="i_content" scrolling="auto"></iframe>
+    <iframe class="iframeH100" name="i_content" id="i_content" src=""></iframe>
     <!-- /.content -->
+  </div>
   <!-- /.content-wrapper -->
+
   <jsp:include page="/footer.jsp" />
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
@@ -125,7 +159,7 @@
 <!-- FastClick -->
 <script src="../../bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
+<script src="../../dist/js/adminlte.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->

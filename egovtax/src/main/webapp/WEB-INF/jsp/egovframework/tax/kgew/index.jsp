@@ -14,7 +14,7 @@
 <script type="text/javascript" src='/common/js/ibleaders.js' charset='utf-8'></script>
 <script src="/sheet/sheet/ibsheetinfo.js" type="text/javascript"></script>
 <script src="/sheet/sheet/ibsheet.js" type="text/javascript"></script>
-
+</head>
 <script type="text/javascript">
 	var data = ${menuStr};	
 	

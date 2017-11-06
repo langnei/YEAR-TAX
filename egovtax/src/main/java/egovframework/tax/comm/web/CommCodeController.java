@@ -189,11 +189,11 @@ public class CommCodeController {
 					EgovMap resultsubMap  =  (EgovMap)submenuList.get(j);
 					
 					menuStr.append("<li><a href='/tax/"+sysName+"/"+resultsubMap.get("url")+".do' target='i_content'><i class='fa fa-file-o'></i>"+resultsubMap.get("title")+"</a></li>");
-					//menuStr.append("<li><a href='javascript:open_iframe(\"www.naver.com\")>'<i class='fa fa-file-o'></i>"+resultsubMap.get("title")+"</a></li>");
+				
 				}
 				
 				menuStr.append("</ul>");
-				menuStr.append("</li>");				
+				menuStr.append("</li>");
 			}
 		}
 
