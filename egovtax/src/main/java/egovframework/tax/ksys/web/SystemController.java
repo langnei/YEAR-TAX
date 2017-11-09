@@ -111,7 +111,7 @@ public class SystemController {
 		return "/tax/ksys/syia030";
 	}
 	
-	@RequestMapping(value = "/mis/ksys/syia030_Select.do")
+	@RequestMapping(value = "/tax/ksys/syia030_Select.do")
 	public @ResponseBody ModelMap syia030_Select(@RequestParam Map<String,Object> map) throws Exception {
 		//IBSheetUtil ibUtil = new IBSheetUtil();
 		System.out.println(map.get("frm_SearchDepa"));		

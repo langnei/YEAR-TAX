@@ -49,36 +49,37 @@
 </head>  
 <script type="text/javascript">
     $(document.body).ready(function () {
-        var API_SERVER = "http://api-demo.ax5.io";
+        var API_SERVER = "/tax/ksys/syia030_Select.do";
         var firstGrid = new ax5.ui.grid();
  
         firstGrid.setConfig({
             target: $('[data-ax5grid="first-grid"]'),
             columns: [
-                {key: "a", label: "field A"},
-                {key: "b", label: "field B"},
-                {key: "c", label: "numbers C"},
-                {key: "d", label: "field D"},
-                {key: "e", label: "field E"},
-                {key: "f", label: "field F"},
-                {key: "g", label: "field G"},
-                {key: "h", label: "field H"}
+                {key: "a", label: "상태", width: 80},
+                {key: "b", label: "삭제", width: 80},
+                {key: "c", label: "사원번호", width: 150, sortable: true, align: "center"},
+                {key: "d", label: "사원명", width: 150},
+                {key: "e", label: "사용자ID", width: 150},
+                {key: "f", label: "비밀번호", width: 150},
+                {key: "g", label: "근무여부", width: 150},
+                {key: "h", label: "부서코드", width: 150},
+                {key: "i", label: "부서명", width: 150}
             ]
         });
  
-        gridList = {a: "A", b: "A01", c:"C", d:"D", e:"E", f:"F", g:"G"};
+        //gridList = {a: "A", b: "A01", c:"C", d:"D", e:"E", f:"F", g:"G"};
         // 값이 없는 h 는 표현안됨
-        firstGrid.setData(gridList);
+        //firstGrid.setData(gridList);
         // 그리드 데이터 가져오기
-        /*
+
         $.ajax({
             method: "GET",
-            url: API_SERVER + "/api/v1/ax5grid",
+            url: API_SERVER,
             success: function (res) {
                 firstGrid.setData(res);
             }
         });
-        */
+
     });
 </script>
 <body class="hold-transition skin-blue sidebar-mini">

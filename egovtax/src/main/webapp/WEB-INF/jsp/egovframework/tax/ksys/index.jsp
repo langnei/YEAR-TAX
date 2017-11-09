@@ -53,14 +53,15 @@
 			}else{
 				$("iframe[name='i_content']").contents().find("body").removeClass("sidebar-collapse");
 			}
-		});
+		});	 		
  		
- 		$(".treeview-menu>li").click(function(){
+ 		$(".treeview-menu > li").click(function(){
+ 			$(".treeview-menu").parent().removeClass("active");
+ 			$(".treeview-menu > li").removeClass("active");
  			$(this).attr("class","active");
+ 			$(this).parent().parent().attr("class","active treeview");
 		}); 		
  		
- 		
-
     });
 </script>
 
