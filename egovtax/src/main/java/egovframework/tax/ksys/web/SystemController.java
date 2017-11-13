@@ -35,6 +35,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
+import com.google.gson.Gson;
+
 import egovframework.tax.comm.service.CommCodeService;
 import egovframework.tax.comm.service.CommDefaultVO;
 import egovframework.tax.comm.service.CommVO;
@@ -113,17 +115,14 @@ public class SystemController {
 	
 	@RequestMapping(value = "/tax/ksys/syia030_Select.do")
 	public @ResponseBody ModelMap syia030_Select(@RequestParam Map<String,Object> map) throws Exception {
-		//IBSheetUtil ibUtil = new IBSheetUtil();
-		System.out.println(map.get("frm_SearchDepa"));		
+		
+		System.out.println("부서코드="+map.get("frm_SearchDepa"));		
 		//데이터 조회
 		List data = systemService.syia030_Select(map);
+		System.out.println("셀렉트"+data);		
 		
-		System.out.println("셀렉트"+data);
+		Gson gson = new Gson();
 
-        //JSON 
-        //ibUtil.setCodeMessage("정상적으로 처리되었습니다."); 
-        //ibUtil.setData(data); 
-    
         //JSON 반환 
         return (ModelMap) data; 
 	}	
