@@ -1,4 +1,5 @@
-//ibsheet 관련 공통함수
+//jqxGrid 
+document.write(' ');
 
 
 /*
@@ -65,9 +66,6 @@ function DataSearch(param){
 	}
 }
 
-
-
-
 /*
  * 공통 조회 함수
  * paramlist (json object)
@@ -111,9 +109,6 @@ function DataSearchPaging(param){
 	}
 }
 
-
-
-
 /*
  * 공통 조회 함수
  * paramlist (json object)
@@ -126,11 +121,6 @@ function DataSearchPaging(param){
 function DirectDown2Excel(param){
 	
 }
-
-
-
-
-
 
 /*
  * 공통 저장 함수
@@ -248,42 +238,3 @@ function saveFinish(code,msg){
 */
 var themaCode = "GM2";
 var themaValue = "Main2";
-
-/*
-case "Main": 
-	mySheet.SetTheme('GM', 'Main');
-case "Main2":      
-	mySheet.SetTheme('GM2', 'Main2');
-case "Main3":
-	mySheet.SetTheme('GM3', 'Main3');
-case "Blue":      
-	mySheet.SetTheme('BL', 'Blue');
-case "Brown":      
-	mySheet.SetTheme('BN', 'Brown');
-case "Gray":      
-	mySheet.SetTheme('GY', 'Gray');
-case "Green":      
-	mySheet.SetTheme('GN', 'Green');
-case "Navy":      
-	mySheet.SetTheme('NB', 'Navy');
-case "Orange":      
-	mySheet.SetTheme('OR', 'Orange');
-case "Purple":      
-	mySheet.SetTheme('PP', 'Purple');
-case "Yellow":      
-	mySheet.SetTheme('YL', 'Yellow');
-case "YellowGreen":      
-	mySheet.SetTheme('YGN', 'YellowGreen');
-case "LightBrown":      
-	mySheet.SetTheme('LBN', 'LightBrown');
-case "LightGray":      
-	mySheet.SetTheme('LGY', 'LightGray');
-case "LightGreen":      
-	mySheet.SetTheme('LGN', 'LightGreen');
-case "LightPurple":      
-	mySheet.SetTheme('LPP', 'LightPurple');
-case "LightSky":      
-	mySheet.SetTheme('LS', 'LightSky');
-case "LightRed":      
-	mySheet.SetTheme('LR', 'LightRed');
-*/

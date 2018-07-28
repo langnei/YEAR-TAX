@@ -26,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -72,15 +73,7 @@ public class CommLoginController {
 	/** Validator */
 	@Resource(name = "beanValidator")
 	protected DefaultBeanValidator beanValidator;
-
 	
-	/**
-	 * Login Page 를 띄운다.
-	 * @param searchVO - 조회할 정보가 담긴 SampleDefaultVO
-	 * @param model
-	 * @return "/sample/egovSampleList"
-	 * @exception Exception
-	 */
 	@RequestMapping(value = "/tax/login.do")
 	public String openLogin(ModelMap model) throws Exception {
 		/** EgovPropertyService.msis.ksys */

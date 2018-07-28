@@ -38,7 +38,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -103,7 +103,17 @@ public class CommCodeController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/tax/index.do")
-	public String commIndexView(@RequestParam(value="sysGubn",required=false) String sysGubn, @RequestParam(value="bsgbGubn",required=false) String bsgbGubn, @RequestParam(value="wplaGubn",required=false) String wplaGubn, HttpServletRequest req, ModelMap model) throws Exception {
+	public String commIndexView(@RequestParam(value="sysGubn",required=false, defaultValue="11") String sysGubn, 
+			@RequestParam(value="bsgbGubn",required=false) String bsgbGubn, 
+			@RequestParam(value="wplaGubn",required=false) String wplaGubn, 
+			HttpServletRequest req, ModelMap model) throws Exception {
+		
+		String wPlac = "";
+		String eNumb = "";
+		String jkCode = "";
+		String sysName = "";
+		String acctGubn = "";
+		
 		/** EgovPropertyService.msis.ksys */
 		long now = System.currentTimeMillis();
 
@@ -115,7 +125,6 @@ public class CommCodeController {
 			return "redirect:/tax/login.do";
 		}
 		
-		String wPlac = "";
 		if(wplaGubn != null && !wplaGubn.equals("")) {
 			wPlac = wplaGubn;
 			CommonSessionCookie.setSessionAttribute(req, "_work_plac", wplaGubn);
@@ -123,90 +132,32 @@ public class CommCodeController {
 			wPlac = (String)CommonSessionCookie.getSessionAttribute(req, "_work_plac");
 		}
 		
-		String eNumb = (String)CommonSessionCookie.getSessionAttribute(req, "_empl_numb");
-		String jkCode = (String)CommonSessionCookie.getSessionAttribute(req, "_empl_jkgb");
+		eNumb = (String)CommonSessionCookie.getSessionAttribute(req, "_empl_numb");
+		jkCode = (String)CommonSessionCookie.getSessionAttribute(req, "_empl_jkgb");
 		
-		if(sysGubn == null || sysGubn.equals("")) {
-				sysGubn = "11";
-			/*
-			if(jkCode != null && jkCode.equals("15101")){
-				sysGubn = "13"; 
-			}
-			*/
-		}
+		sysName = CommCodeUtil.makeSysNameSelect(sysGubn);
 			
-		String sysName = "";
 		CommDefaultVO searchVO = new CommDefaultVO();
-		CommDefaultVO searchsubVO = new CommDefaultVO();
 		
 		searchVO.setSysGubn(sysGubn);
-		searchsubVO.setSysGubn(sysGubn);
-		
-		if(sysGubn.equals("01")) sysName = "kins"; // 인사관리
-		else if(sysGubn.equals("02")) sysName = "kpay"; // 급여관리			
-		else if(sysGubn.equals("04")) sysName = "kbac"; // 회계관리	
-		else if(sysGubn.equals("05")) sysName = "kmac"; // 예산관리
-		else if(sysGubn.equals("06")) sysName = "ktac"; // 세무관리
-		else if(sysGubn.equals("07")) sysName = "kgew"; // 공통관리
-		else if(sysGubn.equals("12")) sysName = "kmem"; // 회원관리	
-		else if(sysGubn.equals("13")) sysName = "keis"; // 경영관리
-		else if(sysGubn.equals("11")) sysName = "ksys"; // 시스템관리
-		else if(sysGubn.equals("15")) sysName = "ktax"; // 연말정산관리
-		
 		searchVO.setSearchKeyword(eNumb);
-		searchsubVO.setSearchKeyword(eNumb);
 		
 		CommonSessionCookie.setSessionAttribute(req, "_sys_name", sysName);
 		//데이터 조회
-		List<?> menuList = commCodeService.selectMenuList(searchVO); 
-		//System.out.println("메뉴리스트=="+menuList.toString());
-		
-		StringBuffer menuStr = new StringBuffer();
 
-		//menuStr.append("{Data:[");		
+		List<?> menuList = commCodeService.selectMenuList(searchVO);
+		List<?> menuSubList = commCodeService.selectSubMenuList(searchVO);
 		
-		for(int i=0; i<menuList.size(); i++) {
-			
-			EgovMap resultMap  =  (EgovMap)menuList.get(i);
-						
-			if(resultMap.get("url").equals(" ")) {
-				
-				menuStr.append("<li class='treeview'>");
-				menuStr.append("<a href='#'>");
-				menuStr.append("<i class='fa fa-folder'></i> <span>"+resultMap.get("title")+"</span>");
-				menuStr.append("<span class='pull-right-container'>");
-				menuStr.append("<i class='fa fa-angle-left pull-right'></i>");
-				menuStr.append("</span>");
-				menuStr.append("</a>");
-				menuStr.append("<ul class='treeview-menu'>");
+		/*
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonList="";
+		jsonList = mapper.writeValueAsString(menuSubList);
+		System.out.println("json리스트값==="+jsonList.toString());
+		*/
 
-				searchsubVO.setCodeGubn((String) resultMap.get("bCode"));
-				//하위데이터 조회
-				List<?> submenuList = commCodeService.selectSubMenuList(searchsubVO); 		
-
-				for(int j=0; j<submenuList.size(); j++) {
-					
-					EgovMap resultsubMap  =  (EgovMap)submenuList.get(j);
-					
-					menuStr.append("<li><a href='/tax/"+sysName+"/"+resultsubMap.get("url")+".do' target='i_content'><i class='fa fa-file-o'></i>"+resultsubMap.get("title")+"</a></li>");
-				
-				}
-				
-				menuStr.append("</ul>");
-				menuStr.append("</li>");
-			}
-		}
-
-		model.addAttribute("menuStr", menuStr.toString());
-		
-		//System.out.println("mmenuSelect=="+mmenuSelect);
-		//CommonSessionCookie.setSessionAttribute(req, "_mmenu_select", mmenuSelect);
-		
-		String acctGubn = "";
-		// 
-	    HashMap map = new HashMap();
+	    HashMap<String, String> map = new HashMap<String, String>();
 	    map.put("work_plac", wPlac); //사업장
-	    map.put("busi_year", strToday.substring(0, 4)); //년도
+	    map.put("busi_year", strToday.substring(0,4)); //년도
 	    map.put("empl_numb", eNumb); //사번
 	    
 	    //데이터 조회
@@ -221,12 +172,15 @@ public class CommCodeController {
 			}
 		}
 		String cSele = CommCodeUtil.makeCodeSelect(codeList, acctGubn);
-		model.addAttribute("bsSel", cSele);
 		
 		// 사업장
 		codeList = commCodeService.commWplacCombo(map);
 		cSele = CommCodeUtil.makeCodeSelect(codeList, wPlac);
-
+		
+		model.addAttribute("sysName", sysName);
+		model.addAttribute("menuList", menuList);		
+		model.addAttribute("menuSubList", menuSubList);		
+		model.addAttribute("bsSel", cSele);
 		model.addAttribute("wplaSel", cSele);
 		
 		return "/tax/"+sysName+"/index";

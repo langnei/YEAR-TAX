@@ -51,7 +51,7 @@
 		<![CDATA[
 			SELECT 
 				LVL - 1 as "level",
-				SUB as "image", 
+				SUB as "image",
 				DECODE(PROG_ID,' ',' ', PROG_ID) as  "url",
 				PROG_NAME AS "title", 
 				BCODE B_CODE
@@ -69,11 +69,11 @@
 			 AND   A.PROG_IDEN = F.PROG_IDEN 
 			 AND   G.PROG_IDEN = A.PROG_IDEN 
 			 AND   A.USER_SABN = #{searchKeyword}       
-			 AND   SUBSTR(B.TONG_CODE, 4,2) = #{sysGubn}
-			 AND   A.CHAR_CODE = #{codeGubn}		
+			 AND   SUBSTR(B.TONG_CODE, 4,2) = #{sysGubn}		
 		   )
 		]]>	
 	</select>
+	<!-- AND   A.CHAR_CODE = #{codeGubn} -->
 		
 	<select id="commBusiCombo" parameterType="java.util.HashMap" resultType="egovMap">
 		<![CDATA[

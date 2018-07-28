@@ -38,93 +38,82 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <!-- iframe height 100% -->
-  <link rel="stylesheet" href="../../common/css/iframe.css">
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
 </head>
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		$("#i_content").attr("src","/firstPage.jsp");
+		/*
+ 		$(".treeview-menu > li > a").click(function(){
+ 			var hreg_nm = ($(this).attr('href'));
+ 			var hreg_id = ($(this).attr('id'));
+ 			$("#acTive").val(hreg_id);
+ 			$("#frm").attr("action", hreg_nm);
+ 			$("#frm").submit();
+		});
 		
- 		$(".sidebar-toggle").click(function(){
- 			
-			if(!$("body").hasClass("sidebar-collapse") === true){
-				$("iframe[name='i_content']").contents().find("body").attr("class","skin-blue sidebar-mini sidebar-collapse");
-			}else{
-				$("iframe[name='i_content']").contents().find("body").removeClass("sidebar-collapse");
-			}
-		});	 		
- 		
- 		$(".treeview-menu > li").click(function(){
- 			$(".treeview-menu").parent().removeClass("active");
- 			$(".treeview-menu > li").removeClass("active");
- 			$(this).attr("class","active");
- 			$(this).parent().parent().attr("class","active treeview");
-		}); 		
- 		
+		$(".treeview-menu > li > a").click(function(){ 
+			var pageurl = $(this).attr('id');
+			
+			$.ajax({ 
+				type: 'post', 
+				url: pageurl, 
+			    dataType : 'json', 
+		        error : function() {
+		            alert('통신실패!!');
+		        },	    
+			    success: function(data) { 
+			    	$("#row").html(data); 
+			    } 
+			});	
+		})
+		*/
+	
     });
 </script>
 
 <body class="hold-transition skin-blue sidebar-mini">
  <div class="wrapper">
-
-  <jsp:include page="/topmenu.jsp" />
-
+  <!-- 탑메뉴 S -->
+  <jsp:include page="../inc/topmenu.jsp" />
+  <!-- 탑메뉴 E -->	
   <!-- Left side column. contains the logo and sidebar -->
-  <!-- 왼쪽메뉴 -->
-  <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <!-- Sidebar user panel -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <!-- 프로필 사진 -->
-          <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <!-- 프로필 이름 -->
-          <p>Alexander Pierce</p>
-          <!-- 프로필 상태 -->
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
-      </div>
-      <!-- search form -->
-      <!-- 프로필 검색 -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          	  <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-              </span>
-        </div>
-      </form>
-      <!-- /.search form -->
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-
-      <!-- 사이드바 -->
-      <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-        <!-- 트리메뉴 -->
-        ${menuStr}
-        <!-- 트리메뉴 끝 -->
-      </ul>
-
-    </section>
-    <!-- /.sidebar -->
-  </aside>
-
+  <!-- 왼쪽메뉴 S -->
+  <jsp:include page="../inc/sidemenu.jsp" />
+  <!-- 왼쪽메뉴 E -->
+  <!-- 메인메뉴 S -->
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-iframe">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Data Tables
+        <small>advanced tables</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Tables</a></li>
+        <li class="active">Data tables</li>
+      </ol>
+    </section>
+
     <!-- Main content -->
-    <iframe class="iframeH100" name="i_content" id="i_content" src=""></iframe>
+    <section class="content">
+      <div id="row">
+      </div>
+      <form method="post" id="frm" action="">
+      	<input type="hidden" name="acTive" id="acTive" value="">
+      </form>
+    </section>
     <!-- /.content -->
+    
   </div>
   <!-- /.content-wrapper -->
-
-  <jsp:include page="/footer.jsp" />
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
+  <!-- 메인메뉴 E -->
+  <!-- 하단메뉴 S -->
+  <jsp:include page="../inc/footer.jsp" />
+  <!-- 하단메뉴 E -->
+  <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->

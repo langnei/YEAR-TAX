@@ -53,9 +53,9 @@ public interface CommCodeService {
     /**하위메뉴조회*/
     List<?> selectSubMenuList(CommDefaultVO searchsubVO) throws Exception;
     /**사업구분 콤보환경*/
-    List<?> commBusiCombo(HashMap map) throws Exception;
+    List<?> commBusiCombo(HashMap<?, ?> map) throws Exception;
     /**개인에 대한 사업장을 가져온다.*/
-    List<?> commWplacCombo(HashMap map) throws Exception;
+    List<?> commWplacCombo(HashMap<?, ?> map) throws Exception;
    
-    List<?> depaCodeCombo(HashMap map) throws Exception;
+    List<?> depaCodeCombo(HashMap<?, ?> map) throws Exception;
 }

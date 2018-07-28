@@ -85,7 +85,50 @@ public class SystemController {
 	/** Validator */
 	@Resource(name = "beanValidator")
 	protected DefaultBeanValidator beanValidator;
-
+	
+	@ModelAttribute("setMenuList")
+	public void setMenuList (
+			@RequestParam(value="sysGubn", required=false, defaultValue="11") String sysGubn,
+			@RequestParam(value="acTive", required=false) String acTive,
+			HttpServletRequest req,
+			ModelMap model) throws Exception{
+		
+		System.out.println(acTive);
+		
+		String eNumb = "";
+		String sysName = "";
+		String menuSelect = acTive; 
+		
+		eNumb = (String)CommonSessionCookie.getSessionAttribute(req, "_empl_numb");
+		
+		CommDefaultVO searchVO = new CommDefaultVO();
+		
+		searchVO.setSysGubn(sysGubn);
+		searchVO.setSearchKeyword(eNumb);
+		
+		sysName = CommCodeUtil.makeSysNameSelect(sysGubn);
+		CommonSessionCookie.setSessionAttribute(req, "_sys_name", sysName);
+		
+		List<?> menuList = commCodeService.selectMenuList(searchVO);
+		List<?> menuSubList = commCodeService.selectSubMenuList(searchVO);
+		
+		model.addAttribute("menuSelect", menuSelect);
+		model.addAttribute("sysName", sysName);
+		model.addAttribute("menuList", menuList);		
+		model.addAttribute("menuSubList", menuSubList);	
+		
+		System.out.println("메뉴리스트 불러오고있습니다.");
+	}
+	
+	@RequestMapping(value = "/tax/ksys/syia010.do")
+	public String syia010View(@ModelAttribute("searchVO") SystemDefaultVO searchVO, ModelMap model) throws Exception {
+		/** EgovPropertyService.msis.ksys */
+		
+		String skeyword = searchVO.getSearchKeyword();
+		model.addAttribute("keyword", skeyword);
+		
+		return "/tax/ksys/syia010";
+	}
 	/**
 	 * 사용자를 조회한다. (pageing)
 	 * @param searchVO - 조회할 정보가 담긴 SampleDefaultVO
@@ -112,19 +155,4 @@ public class SystemController {
 				
 		return "/tax/ksys/syia030";
 	}
-	
-	@RequestMapping(value = "/tax/ksys/syia030_Select.do")
-	public @ResponseBody ModelMap syia030_Select(@RequestParam Map<String,Object> map) throws Exception {
-		
-		System.out.println("부서코드="+map.get("frm_SearchDepa"));		
-		//데이터 조회
-		List data = systemService.syia030_Select(map);
-		System.out.println("셀렉트"+data);		
-		
-		Gson gson = new Gson();
-
-        //JSON 반환 
-        return (ModelMap) data; 
-	}	
-
 }

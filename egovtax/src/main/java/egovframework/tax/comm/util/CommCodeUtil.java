@@ -39,6 +39,29 @@ public class CommCodeUtil {
 	@Resource(name = "commCodeService")
 	private CommCodeService commCodeService;
 	
+	
+	public static String makeSysNameSelect(String sysGubn){
+		
+		String sysName = "";
+	
+		if(sysGubn == null || sysGubn.equals("")) {
+			sysGubn = "11";
+		}
+		
+		if(sysGubn.equals("01")) sysName = "kins"; // 인사관리
+		else if(sysGubn.equals("02")) sysName = "kpay"; // 급여관리			
+		else if(sysGubn.equals("04")) sysName = "kbac"; // 회계관리	
+		else if(sysGubn.equals("05")) sysName = "kmac"; // 예산관리
+		else if(sysGubn.equals("06")) sysName = "ktac"; // 세무관리
+		else if(sysGubn.equals("07")) sysName = "kgew"; // 공통관리
+		else if(sysGubn.equals("11")) sysName = "ksys"; // 시스템관리		
+		else if(sysGubn.equals("12")) sysName = "kmem"; // 회원관리	
+		else if(sysGubn.equals("13")) sysName = "keis"; // 경영관리
+		else if(sysGubn.equals("15")) sysName = "ktax"; // 연말정산관리		
+		
+		return sysName;
+	}
+	
 	// sheet이 combo code 만들기
 	public static String[] makeCodeCombo(List<?> codeList)
 	{
