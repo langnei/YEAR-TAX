@@ -1,11 +1,6 @@
 <%@page contentType="text/html;charset=utf-8"%>
-<%@page import="egovframework.tax.comm.web.CommonSessionCookie"%>
-<% 
-String _emplNumb = (String)CommonSessionCookie.getSessionAttribute(request, "_empl_numb");
-String _emplName = (String)CommonSessionCookie.getSessionAttribute(request, "_empl_name");
-%>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,91 +38,115 @@ String _emplName = (String)CommonSessionCookie.getSessionAttribute(request, "_em
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <!-- iframe height 100% -->
-  <link rel="stylesheet" href="../../common/css/iframe.css">
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
   
-</head>  
+<style>
+.thCenter {
+	text-align: center;
+	vertical-align: middle !important;
+}
+</style>  
+</head>
 <script type="text/javascript">
-    $(document.body).ready(function () {
-
+	$(document).ready(function(){
+		var sub_active = "${menuSelect}";
+		
+		if ($('#'+sub_active).length){
+			$('#'+sub_active).parent().parent().parent().attr("class","treeview active menu-open");			
+			$('#'+sub_active).parent().attr("class","active");
+			var title = $('#'+sub_active).text();
+			var maintitle = $("#spantitle").text();
+			$("#title").text(title);
+			$("#maintitle").text(maintitle);
+			$("#subtitle").text(title);
+		}
+		
     });
 </script>
-<body class="hold-transition skin-blue sidebar-mini">
 
-	<div class="content-wrapper">
-	  <!-- Content Header (Page header) -->
-	  <section class="content-header">
-	    <h1>
-	                사용자 등록
-	      <!-- <small>advanced tables</small> --> 
-	    </h1>
-	    <!--
-	    <ol class="breadcrumb">
-	      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-	      <li><a href="#">Tables</a></li>
-	      <li class="active">Data tables</li>
-	    </ol>  
-	    -->
-	  </section>
-	 
-	  <!-- Main content -->
-	  <section class="content">
-	    <div class="row">
-	      <div class="col-xs-12">
-	      
-	        <div class="box">        
-	          <div class="box-body">
-	              <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
-	              <i class="fa fa-refresh"></i> 초기화 </button>
-	              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">
-	              <i class="fa fa-plus"></i> 입력 </button>
-	              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-danger">
-	              <i class="fa fa-search"></i> 조회 </button>
-	              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-success">
-	              <i class="fa fa-floppy-o"></i> 저장 </button>
-	          </div>        
-	          <!-- /.box-body -->
-	        </div>
-	        <!-- /.box -->
-	        
-          <div class="box">
-            <form name="frm">
-            <div class="box-header">
-                <table class="table table-bordered text-center">
-                	<tr>
-	                	<th class="tit">부서</td>
-	                	<td class="r20">
-	                	<select id="frm_SearchDepa" name="frm_SearchDepa" style="width:200px;" class="selectbox" >
-	                		<option value="">전체부서</option>
-	                		${depaSele}
-	                	</select>
-	                	</td>	
-	                	<th class="tit">사원번호</th>
-	                	<td class="r20">
-	                		<input type="text" id="frm_SearchEmpl" name="frm_SearchEmpl" value="" style="width:100px;text-align:center;" class="inputbox"/>
-	                		<input type="text" id="frm_SearchName" name="frm_SearchName" value="" style="width:100px;text-align:left;" class="inputbox"/>
-	                		<img style="CURSOR:hand;vertical-align:middle;" src="/image/b_find_d.gif" onClick="__GetCallEmpl('frm_SearchEmpl','frm_SearchName');">
-	                	</td>			
-                	</tr>
-                	<input type="hidden" id="frm_wPlac" name="frm_wPlac" value="${wPlac}">
-                </table>
-            </div>
-            </form>
-            <!-- /.box-header -->
-            <div class="box-body">
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->	        
-	        
+<body class="hold-transition skin-blue sidebar-mini">
+ <div class="wrapper">
+  <!-- 탑메뉴 S -->
+  <jsp:include page="../inc/topmenu.jsp" />
+  <!-- 탑메뉴 E -->	
+  <!-- Left side column. contains the logo and sidebar -->
+  <!-- 왼쪽메뉴 S -->
+  <jsp:include page="../inc/sidemenu.jsp" />
+  <!-- 왼쪽메뉴 E -->
+  <!-- 메인메뉴 S -->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1 id="title"></h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li id="maintitle"><a href="#"></a></li>
+        <li class="active" id="subtitle"></li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div id="row">
+      <div class="col-xs-12">
+      <form name="frm">       
+        <div class="box">       
+          <div class="box-body">
+              <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+              <i class="fa fa-refresh"></i> 초기화 </button>
+              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">
+              <i class="fa fa-plus"></i> 입력 </button>
+              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-danger">
+              <i class="fa fa-search"></i> 조회 </button>
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-success">
+              <i class="fa fa-floppy-o"></i> 저장 </button>
+          </div>        
+        </div>
+        <div class="box">  
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-bordered">
+            	<tr>
+             	<th class="thCenter">부서</th>
+             	<th>
+             	<select class="form-control" id="frm_SearchDepa" name="frm_SearchDepa" style="width:300px;" class="selectbox" >
+             		<option value="">전체부서</option>
+             		${depaSele}
+             	</select>
+             	</th>	
+             	<th class="thCenter">사원번호</th>
+             	<th>
+	             	<div class="col-xs-3">
+	                  <input type="text" class="form-control" placeholder="사번" id="frm_SearchEmpl" name="frm_SearchEmpl" value="">
+	                </div>
+	                <div class="input-group">
+	                	<div class="input-group-btn">
+	                  		<button type="button" class="btn btn-danger">검색</button>
+	                	</div>	                
+	                  	<input type="text" class="form-control" placeholder="성명" id="frm_SearchName" name="frm_SearchName" value="">            
+	                </div>
+             	</th>			
+            	</tr>
+            	<input type="hidden" id="frm_wPlac" name="frm_wPlac" value="${wPlac}">
+            </table>
 	      </div>
-	      <!-- /.col -->
-	    </div>
-	    <!-- /.row -->
-	  </section>
-	  <!-- /.content -->
-	</div>
+	   </div>
+	 </form>
+	 </div>   
+     </div>
+      
+      
+    </section>
+    <!-- /.content -->
+    
+  </div>
+  <!-- /.content-wrapper -->
+  <jsp:include page="../inc/footer.jsp" />
+  <!-- 하단메뉴 E -->
+  <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
 
 <!-- jQuery 3 -->
 <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
@@ -161,4 +180,4 @@ String _emplName = (String)CommonSessionCookie.getSessionAttribute(request, "_em
 <script src="../../dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
-</body>	  
+</body>

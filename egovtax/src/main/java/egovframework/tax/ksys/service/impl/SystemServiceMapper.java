@@ -14,5 +14,8 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 public interface SystemServiceMapper {
 	
 	public List<?> syia030Select(Map map) throws Exception;
+	public List<?> syia030Insert(Map map) throws Exception;
+	public List<?> syia030Update(Map map) throws Exception;
+	public List<?> syia030Delete(Map map) throws Exception;
 	
 }

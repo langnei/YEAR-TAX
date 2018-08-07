@@ -73,4 +73,14 @@ public class SystemServiceImpl implements SystemService {
 	public List<?> syia030_Select(Map<String, Object> map) throws Exception {
 		return systemServiceMapper.syia030Select(map);
 	}
+	public List<?> syia030_Insert(Map<String, Object> map) throws Exception {
+		return systemServiceMapper.syia030Insert(map);
+	}	
+	public List<?> syia030_Update(Map<String, Object> map) throws Exception {
+		return systemServiceMapper.syia030Update(map);
+	}	
+	public List<?> syia030_Delete(Map<String, Object> map) throws Exception {
+		return systemServiceMapper.syia030Delete(map);
+	}		
+	
 }

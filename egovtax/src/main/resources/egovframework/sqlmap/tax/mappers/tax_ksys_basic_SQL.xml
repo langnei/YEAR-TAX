@@ -13,7 +13,7 @@
 					 A.HOLD_PRES,  
 					 A.INPU_MAN, 					   
 					 A.INPU_DATE,
-					 B.DEPA_NAME DEPA_NAME
+					 B.DEPA_NAME
 				FROM ZMC A, ZME B, INMAST C   
 			   WHERE A.DEPA_CODE = B.DEPA_CODE(+)
 			     AND A.EMPL_NUMB = C.EMPL_NUMB
@@ -24,5 +24,33 @@
 			ORDER BY A.EMPL_NUMB 
 		]]>
 	</select>		
+	
+	<insert id="syia030Insert" parameterType="java.util.HashMap">
+		<![CDATA[
+			INSERT INTO ZMC (EMPL_NUMB, DEPA_CODE, EMPL_NAME, LOGI_NAME, PASS_NAME, HOLD_PRES, INPU_MAN, INPU_DATE)
+	 		VALUES 
+			(#{emplNumb}# , #{depaCode}# , #{emplName}# , #{logiName}# ,#{passName}# ,#{holdPres}# ,#{inpuMan}# ,to_char(sysdate,'YYYYMMDD'))
+		]]>
+	</insert>	
+	
+	<update id="syia030Update" parameterType="java.util.HashMap">
+		<![CDATA[
+			UPDATE ZMC
+   			   SET EMPL_NAME=#{emplName}#, LOGI_NAME=#{logiName}#, PASS_NAME=#{passName}#, 
+   			       HOLD_PRES=#{holdPres}#, INPU_MAN=#{inpuMan}#, INPU_DATE=to_char(sysdate,'YYYYMMDD')
+ 			WHERE 1=1
+   			  AND EMPL_NUMB = #{emplNumb}# 
+   			  AND DEPA_CODE = #{depaCode}# 
+		]]>
+	</update>
+	
+	<delete id="syia030Delete" parameterType="java.util.HashMap">
+		<![CDATA[
+			DELETE FROM ZMC 
+ 			WHERE 1=1
+   			  AND EMPL_NUMB = #{emplNumb}# 
+   			  AND DEPA_CODE = #{depaCode}# 
+		]]>
+	</delete>	
 	 
 </mapper>

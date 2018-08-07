@@ -45,5 +45,8 @@ public interface SystemService {
 	 */   
 
 	List<?> syia030_Select(Map<String, Object> map) throws Exception;
+	List<?> syia030_Insert(Map<String, Object> map) throws Exception;
+	List<?> syia030_Update(Map<String, Object> map) throws Exception;
+	List<?> syia030_Delete(Map<String, Object> map) throws Exception;
 	
 }

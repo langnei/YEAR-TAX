@@ -38,7 +38,9 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" href="../../common/jqwidgets/styles/jqx.base.css" type="text/css" />
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+
   
 <style>
 .thCenter {
@@ -59,8 +61,107 @@
 			$("#title").text(title);
 			$("#maintitle").text(maintitle);
 			$("#subtitle").text(title);
+		} 		
+        
+        $("#jqxgrid").jqxGrid(
+        {   
+            columns: [                    
+			  { text:    '삭제', datafield:  'sDelete', width:  50, columntype: 'checkbox' },
+              { text:  '사원번호', datafield: 'emplNumb', width: 100, columntype: 'textbox' },
+              { text:   '사원명', datafield: 'emplName', width: 150, cellsalign: 'right' },
+              { text: '사용자ID', datafield: 'logiName', width: 100, columntype: 'textbox' },
+              { text:  '비밀번호', datafield: 'passName', width: 100, columntype: 'textbox' },
+              { text:  '근무여부', datafield: 'holdPres', width: 100, columntype: 'checkbox' },
+              { text:  '부서코드', datafield: 'depaCode', width: 100, columntype: 'textbox' },
+              { text:   '부서명', datafield: 'depaName', width: 100, columntype: 'textbox' }
+            ]
+        });	
+        
+        
+        
+        
+		function doAction( url, obj ){
+	        var source =
+	        {
+	        	datatype: "json",
+	        	datafields: [
+	                         { name: 'emplNumb' },
+	                         { name: 'emplName' },
+	                         { name: 'logiName' },
+	                         { name: 'passName' },
+	                         { name: 'holdPres' },
+	                         { name: 'depaCode' },
+	                         { name: 'depaName' }
+	                     ],
+	        	url: url,
+	            data: obj        	
+	        };
+	        
+	        var dataAdapter = new $.jqx.dataAdapter(source, {
+	            loadComplete: function (data) { },
+	            loadError: function (xhr, status, error) { }
+	        });
+	        
+	    	var jqxwidth = $("#jqxbody").width();
+	    	var jqxheight = $(window).height()-330;
+	    	
+	        $("#jqxgrid").jqxGrid(
+	        {   
+	        	width : jqxwidth,
+	        	height : jqxheight,
+	        	editable: true,
+	        	sortable: true,   
+	        	editmode: 'dblclick',
+	        	source : dataAdapter
+	        });       
 		}
-		
+        
+        
+		$(".box-body > :button").on("click", function(){
+			var formvalue = $("#frm").serializeArray();
+			var searchObj = null;
+			var successObj = null;
+			
+			if ( formvalue ) {
+				searchObj = {};
+		        jQuery.each(formvalue, function() {
+		        	searchObj[this.name] = this.value;
+		        });		
+			}
+			
+			var buttonid = $(this).attr("id");
+			
+			switch(buttonid){
+				case "refresh":
+					break;
+				case "plus":
+					break;
+				case "search":
+			        var url = "/tax/ksys/syia030_Select.do";
+			        doAction( url, searchObj );
+			       	break;
+				case "success":
+					var url = "/tax/ksys/syia030_Save.do";	
+					
+				    var rows = $('#jqxgrid').jqxGrid('getrows');
+				    var result = "";
+				    for(var i = 0; i < rows.length; i++)
+				    {
+				        var row = rows[i];
+				        result += row.EMPL_NUMB + " " + row.EMPL_NAME + " " + "\n";        
+				    }
+				    var state = $("#jqxgrid").jqxGrid('savestate');
+				    var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
+				    var data = $('#jqxgrid').jqxGrid('getrowdata', selectedrowindex);
+				    var rows = $('#jqxgrid').jqxGrid('getrows');
+				    //alert(data);
+				    //alert(data.EMPL_NUMB + " " + data.EMPL_NAME);
+
+				    
+					doAction( url, rows );
+					break;				
+			}			
+		});     
     });
 </script>
 
@@ -89,17 +190,17 @@
     <!-- Main content -->
     <section class="content">
       <div id="row">
-      <div class="col-xs-12">
-      <form name="frm">       
+      <div class="col-xs-13">
+      <form id="frm">       
         <div class="box">       
           <div class="box-body">
-              <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+              <button type="button" class="btn btn-default" id="refresh" data-toggle="modal" data-target="#modal-default">
               <i class="fa fa-refresh"></i> 초기화 </button>
-              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">
+              <button type="button" class="btn btn-info" id="plus" data-toggle="modal" data-target="#modal-info">
               <i class="fa fa-plus"></i> 입력 </button>
-              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-danger">
+              <button type="button" class="btn btn-danger" id="search" data-toggle="modal" data-target="#modal-danger">
               <i class="fa fa-search"></i> 조회 </button>
-              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-success">
+              <button type="button" class="btn btn-success" id="success" data-toggle="modal" data-target="#modal-success">
               <i class="fa fa-floppy-o"></i> 저장 </button>
           </div>        
         </div>
@@ -116,7 +217,7 @@
              	</th>	
              	<th class="thCenter">사원번호</th>
              	<th>
-	             	<div class="col-xs-3">
+	             	<div class="col-xs-4">
 	                  <input type="text" class="form-control" placeholder="사번" id="frm_SearchEmpl" name="frm_SearchEmpl" value="">
 	                </div>
 	                <div class="input-group">
@@ -131,6 +232,11 @@
             </table>
 	      </div>
 	   </div>
+       <div class="box">  
+	    <div class="box-body" id="jqxbody">
+	        <div id="jqxgrid"></div>
+	    </div>
+       </div>
 	 </form>
 	 </div>   
      </div>
@@ -180,4 +286,23 @@
 <script src="../../dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
+
+<script type="text/javascript" src="../../common/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="../../common/jqwidgets/jqxdata.js"></script>
+<script type="text/javascript" src="../../common/jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="../../common/jqwidgets/jqxscrollbar.js"></script>
+<script type="text/javascript" src="../../common/jqwidgets/jqxmenu.js"></script>
+<script type="text/javascript" src="../../common/jqwidgets/jqxlistbox.js"></script>
+<script type="text/javascript" src="../../common/jqwidgets/jqxdropdownlist.js"></script>
+<script type="text/javascript" src="../../common/jqwidgets/jqxcheckbox.js"></script>
+<script type="text/javascript" src="../../common/jqwidgets/jqxgrid.js"></script>
+<script type="text/javascript" src="../../common/jqwidgets/jqxgrid.storage.js"></script>
+<script type="text/javascript" src="../../common/jqwidgets/jqxgrid.edit.js"></script>
+<script type="text/javascript" src="../../common/jqwidgets/jqxgrid.selection.js"></script> 
+<script type="text/javascript" src="../../common/jqwidgets/jqxgrid.columnsresize.js"></script> 
+<script type="text/javascript" src="../../common/jqwidgets/jqxgrid.filter.js"></script> 
+<script type="text/javascript" src="../../common/jqwidgets/jqxgrid.sort.js"></script> 
+<script type="text/javascript" src="../../common/jqwidgets/jqxgrid.pager.js"></script> 
+<script type="text/javascript" src="../../common/jqwidgets/jqxgrid.grouping.js"></script> 
+
 </body>

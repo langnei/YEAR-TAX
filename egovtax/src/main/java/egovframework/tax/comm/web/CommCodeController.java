@@ -147,13 +147,6 @@ public class CommCodeController {
 
 		List<?> menuList = commCodeService.selectMenuList(searchVO);
 		List<?> menuSubList = commCodeService.selectSubMenuList(searchVO);
-		
-		/*
-		ObjectMapper mapper = new ObjectMapper();
-		String jsonList="";
-		jsonList = mapper.writeValueAsString(menuSubList);
-		System.out.println("json리스트값==="+jsonList.toString());
-		*/
 
 	    HashMap<String, String> map = new HashMap<String, String>();
 	    map.put("work_plac", wPlac); //사업장

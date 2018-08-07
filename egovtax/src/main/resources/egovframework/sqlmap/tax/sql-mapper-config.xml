@@ -7,5 +7,6 @@
 		<typeAlias alias="searchVO" type="egovframework.tax.comm.service.CommDefaultVO"/>
 		<typeAlias alias="searchsubVO" type="egovframework.tax.comm.service.CommDefaultVO"/>
 		<typeAlias alias="commVO"   type="egovframework.tax.comm.service.CommVO"/>
+		<typeAlias alias="systemcolumnVO"   type="egovframework.tax.ksys.service.SystemColumnVO"/>
     </typeAliases>
 </configuration>

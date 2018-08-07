@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -93,8 +94,6 @@ public class SystemController {
 			HttpServletRequest req,
 			ModelMap model) throws Exception{
 		
-		System.out.println(acTive);
-		
 		String eNumb = "";
 		String sysName = "";
 		String menuSelect = acTive; 
@@ -115,9 +114,7 @@ public class SystemController {
 		model.addAttribute("menuSelect", menuSelect);
 		model.addAttribute("sysName", sysName);
 		model.addAttribute("menuList", menuList);		
-		model.addAttribute("menuSubList", menuSubList);	
-		
-		System.out.println("메뉴리스트 불러오고있습니다.");
+		model.addAttribute("menuSubList", menuSubList);
 	}
 	
 	@RequestMapping(value = "/tax/ksys/syia010.do")
@@ -155,4 +152,42 @@ public class SystemController {
 				
 		return "/tax/ksys/syia030";
 	}
+	
+	@RequestMapping(value = "/tax/ksys/syia030_Select.do", produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public String syia030Select(@RequestParam Map<String,Object> map, String jsonList) throws Exception {
+		/** EgovPropertyService.msis.ksys */
+		System.out.println("SYIA030_SELECT!");
+		System.out.println(map.toString());
+		ObjectMapper mapper = new ObjectMapper();
+		List<?> data = systemService.syia030_Select(map);
+		System.out.println(data.toString());
+		jsonList = mapper.writeValueAsString(data);
+		System.out.println(jsonList.toString());
+				
+		return jsonList;
+	}	
+	
+	@RequestMapping(value = "/tax/ksys/syia030_Save.do")
+	@ResponseBody
+	public ModelMap syia030Save(@RequestParam Map<String,Object> map) throws Exception {
+		/** EgovPropertyService.msis.ksys */
+		System.out.println("SYIA030_SAVE!");
+		System.out.println(map.toString());
+		ObjectMapper mapper = new ObjectMapper();
+		List<?> data = systemService.syia030_Insert(map);
+				
+		return null;
+	}	
+
+	@RequestMapping(value = "/tax/ksys/syib010.do")
+	public String syib010View(@ModelAttribute("searchVO") SystemDefaultVO searchVO, ModelMap model) throws Exception {
+		/** EgovPropertyService.msis.ksys */
+		
+		String skeyword = searchVO.getSearchKeyword();
+		model.addAttribute("keyword", skeyword);
+		
+		return "/tax/ksys/syib010";
+	}
+	
 }
